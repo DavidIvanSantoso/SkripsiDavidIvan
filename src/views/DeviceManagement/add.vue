@@ -1,115 +1,150 @@
 <template>
   <div class="addDevice">
-    <!-- Form Input Data -->
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-header align-items-center d-flex">
-            <h4 class="card-title mb-0 flex-grow-1">Add Device Data</h4>
-            <button class="btn btn-success" style="color: aliceblue">
-              Confirm
-            </button>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="row">
-                <div class="col md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">WiFi SSID</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Please enter your WiFi SSID"
-                    />
-                  </div>
+    <div class="card">
+      <div class="card-header">Add New Device</div>
+      <div class="card-body">
+        <!-- Form Input Data -->
+        <section>
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-header align-items-center d-flex">
+                  <h6 class="card-title mb-0 flex-grow-1">
+                    Complete Device Information
+                  </h6>
+                  <button class="btn btn-success" style="color: aliceblue">
+                    Confirm
+                  </button>
                 </div>
-                <div class="col md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">WiFi Password</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Please enter your Wifi Password!"
-                    />
-                  </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col md-6">
+                        <div class="form-group">
+                          <label for="exampleFormControlInput1"
+                            >WiFi SSID</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Please enter your WiFi SSID"
+                          />
+                        </div>
+                      </div>
+                      <div class="col md-6">
+                        <div class="form-group">
+                          <label for="exampleFormControlInput1"
+                            >WiFi Password</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Please enter your Wifi Password!"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col md-6">
+                        <div class="form-group">
+                          <label for="exampleFormControlInput1"
+                            >Device Name</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Please enter your Device Name"
+                          />
+                        </div>
+                      </div>
+                      <div class="col md-6">
+                        <div class="form-group">
+                          <label for="exampleFormControlInput1"
+                            >Generated Secret Key</label
+                          >
+                          <input
+                            disabled
+                            type="text"
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="xxxxxxxxx"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div class="row mt-3">
-                <div class="col md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">Device Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Please enter your Device Name"
-                    />
-                  </div>
-                </div>
-                <div class="col md-6">
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1"
-                      >Generated Secret Key</label
-                    >
-                    <input
-                      disabled
-                      type="text"
-                      class="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="xxxxxxxxx"
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </section>
 
-    <!-- Choose Device Type -->
-    <div class="row my-4">
-      <div class="card-group">
-        <div class="card align-items-center">
-          <img
-            src="@/assets/images/microcontroller/ESP32.png"
-            class="card-img-top"
-            style="width: 26rem"
-          />
-          <div class="card-body">
-            <h5 class="card-title">Choose Your Device ESP32 Type!</h5>
-            <select
-              class="form-select my-3"
-              aria-label="Default select example"
+        <!-- Choose Device Type -->
+        <div class="card my-3">
+          <div class="card-header align-items-center d-flex">
+            <h6 class="card-title mb-0 flex-grow-1">
+              Choose Your Microcontroller Type
+            </h6>
+            <!-- <button
+              class="btn btn-success"
+              style="color: aliceblue"
+              @click="changeTypeConfirm"
             >
-              <option v-for="item in esp32type" :key="item.id" :value="item.id">
-                {{ item.name }}
-              </option>
-            </select>
+              Confirm
+            </button> -->
           </div>
-        </div>
-        <div class="card align-items-center">
-          <img
-            src="@/assets/images/microcontroller/ESP8266.png"
-            class="card-img-top"
-            style="width: 26rem"
-          />
           <div class="card-body">
-            <h5 class="card-title">Choose Your Device ESP8266 Type!</h5>
-            <select
-              class="form-select my-3"
-              aria-label="Default select example"
-            >
-              <option
-                v-for="item in esp8266type"
-                :key="item.id"
-                :value="item.id"
-              >
-                {{ item.name }}
-              </option>
-            </select>
+            <div class="card-group">
+              <div class="card align-items-center">
+                <img
+                  src="@/assets/images/microcontroller/ESP32.png"
+                  class="card-img-top"
+                  style="width: 26rem"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Choose Your Device ESP32 Type!</h5>
+                  <select
+                    v-model="type32"
+                    class="form-select my-3"
+                    aria-label="Default select example"
+                  >
+                    <option
+                      v-for="item in esp32type"
+                      :key="item.id"
+                      :value="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="card align-items-center">
+                <img
+                  src="@/assets/images/microcontroller/ESP8266.png"
+                  class="card-img-top"
+                  style="width: 26rem"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Choose Your Device ESP8266 Type!</h5>
+                  <select
+                    v-model="type"
+                    class="form-select my-3"
+                    aria-label="Default select example"
+                  >
+                    <option
+                      v-for="item in esp8266type"
+                      :key="item.id"
+                      :value="item.id"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -119,8 +154,18 @@
 
 <script>
 export default {
+  methods: {
+    changeTypeConfirm() {
+      this.devicetype.typeconfirm = true
+    },
+  },
   data() {
     return {
+      devicetype: {
+        type32: '',
+        type8266: '',
+        typeconfirm: false,
+      },
       esp32type: [
         { name: 'Seed Wio Link', id: 1 },
         { name: 'WifInfo', id: 2 },

@@ -3,13 +3,13 @@
     <!-- Goods tables -->
     <div class="card">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Daftar IoT Variables</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Daftar Cloud Variables</h4>
         <router-link
           class="btn btn-primary justify-content-end"
-          to="/admin/tipe-anggota/add"
+          to="/variables/add"
         >
           <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
-          Tambah IoT Variables
+          Tambah Cloud Variables
         </router-link>
       </div>
       <!-- GoodTable -->
@@ -45,7 +45,7 @@
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
                   <b-button
-                    :to="`/admin/tipe-anggota/${props.row.id}`"
+                    :to="`/variables/${props.row.id}`"
                     type="button"
                     class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
                   >
@@ -115,38 +115,39 @@ export default {
       dummy: {
         rows: [
           {
-            variablesID: 1,
-            deviceID: 'Project1',
-            dataCount: 10,
+            deviceid: 1,
+            devicename: 'Device 1',
+            cntvar: 10,
             lastAccess: 'yyyy/mm/dd',
           },
           {
-            variablesID: 2,
-            deviceID: 'Project1',
-            dataCount: 10,
+            deviceid: 2,
+            devicename: 'Project1',
+            cntvar: 10,
             lastAccess: 'yyyy/mm/dd',
           },
           {
-            variablesID: 3,
-            deviceID: 'Project1',
-            dataCount: 10,
+            deviceid: 3,
+            devicename: 'Project1',
+            cntvar: 10,
             lastAccess: 'yyyy/mm/dd',
           },
         ],
       },
       columns: [
         {
-          label: 'Variables ID',
-          field: 'variablesID',
+          label: 'Device ID',
+          field: 'deviceid',
         },
         {
-          label: 'Variables Title',
-          field: 'deviceID',
+          label: 'Device Name',
+          field: 'devicename',
         },
         {
-          label: 'Data Count in Variables',
-          field: 'dataCount',
+          label: 'Number of Variables',
+          field: 'cntvar',
         },
+
         {
           label: 'Action',
           field: 'action',
