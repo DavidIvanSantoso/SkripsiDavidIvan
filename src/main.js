@@ -9,6 +9,9 @@ import { iconsSet as icons } from '@/assets/icons'
 import DocsExample from '@/components/DocsExample'
 import VueGoodTablePlugin from 'vue-good-table';
 import VueGoodTablePlugin2 from 'vue-good-table-next';
+import Bootstrap from 'bootstrap'
+import BootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css'
+
 
 // import the styles 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
@@ -22,5 +25,8 @@ app.component('CIcon', CIcon)
 app.component('DocsExample', DocsExample)
 app.use(VueGoodTablePlugin);
 app.use(VueGoodTablePlugin2);
+app.use(Bootstrap);
+app.use(BootstrapCSS)
+
 
 app.mount('#app')

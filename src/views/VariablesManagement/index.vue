@@ -44,44 +44,19 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <b-button
-                    :to="`/variables/${props.row.id}`"
-                    type="button"
-                    class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
-                  >
-                    <i
-                      class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
-                    ></i>
-                    Detail
-                  </b-button>
-                  <!-- <router-link class="btn btn-sm btn-success"
-                                        :to="`/admin/tipe-anggota/${props.row.id}`">
-                                        Detail
-                                    </router-link> -->
+                  <router-link :to="`/variables/${props.row.deviceid}`">
+                    <b-button
+                      type="button"
+                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
+                    >
+                      <i
+                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                      ></i>
+                      Detail
+                    </b-button>
+                  </router-link>
                 </span>
-                <span v-if="props.column.field === 'cactive'">
-                  <button
-                    v-if="props.formattedRow[props.column.field] === 'y'"
-                    class="btn-icon btn-sm btn btn-success waves-effect waves-light rounded-pill"
-                  >
-                    <i
-                      class="ri-checkbox-circle-fill label-icon align-middle rounded-pill fs-16"
-                    ></i>
-                  </button>
-                  <button
-                    v-else
-                    class="btn-icon btn-sm btn btn-danger waves-effect waves-light rounded-pill"
-                  >
-                    <i
-                      class="ri-close-circle-fill label-icon align-middle rounded-pill fs-16"
-                    ></i>
-                  </button>
-                  <!-- <span class="fw-bold" :class="
-                                        props.formattedRow[props.column.field] === 'y' ? 'text-success' : 'text-danger'
-                                    ">
-                                        {{ props.formattedRow[props.column.field] === 'y' ? 'Ya' : 'Tidak' }}
-                                    </span> -->
-                </span>
+
                 <span v-else>
                   {{ props.formattedRow[props.column.field] }}
                 </span>

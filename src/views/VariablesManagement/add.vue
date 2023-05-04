@@ -5,9 +5,14 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h6 class="card-title mb-0 flex-grow-1">Cloud Variables</h6>
-          <button class="btn btn-success" style="color: aliceblue">
+          <b-button
+            class="btn btn-success"
+            style="color: aliceblue"
+            data-bs-toggle="modal"
+            data-bs-target="#alertModal"
+          >
             Add Cloud Variables
-          </button>
+          </b-button>
         </div>
         <div class="card-body h-100">
           <div class="p-3">
@@ -75,6 +80,7 @@
         </div>
       </div>
     </div>
+    <!-- card device info -->
     <div class="col md-4">
       <div class="card">
         <div class="card-header align-items-center d-flex">
@@ -104,6 +110,7 @@
                 >Device Type</label
               >
               <input
+                disabled
                 v-model="deviceoption[0].devicetype"
                 type="text"
                 id="disabledTextInput"
@@ -116,10 +123,165 @@
       </div>
     </div>
   </div>
+  <!--modal content-->
+  <div
+    id="alertModal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">
+              Enter Cloud Variables Information
+            </h4>
+            <!-- form input -->
+            <form>
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Var ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label">Variable Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputPassword1"
+                />
+              </div>
+              <!-- vartype -->
+              <div class="mb-2 mx-2">
+                <label for="varType" class="form-label">Variable Type</label>
+                <select
+                  id="disabledSelect"
+                  class="form-select"
+                  v-model="formula"
+                >
+                  <option v-for="item in datatypeOption" :key="item">
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- formula input -->
+              <div class="mb-2 mx-2" v-if="this.formula === 'formula'">
+                <label for="varFormula" class="form-label">Enter Formula</label>
+                <input type="text" class="form-control" />
+                <div id="passwordHelpBlock" class="form-text text-success">
+                  *Basic formula can provide calculation from platform with
+                  basic math operation such as +,-,/,x.*
+                </div>
+              </div>
+
+              <!-- var role -->
+              <div class="varRole mb-2 mx-2">
+                <div class="row">
+                  <label for="varRole" class="form-label"
+                    >Variable Role Access</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio1"
+                    value="w"
+                  />
+                  <label class="form-check-label mx-2" for="inlineRadio1"
+                    >Write</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio2"
+                    value="r"
+                  />
+                  <label class="form-check-label mx-2" for="inlineRadio2"
+                    >Read</label
+                  >
+                </div>
+              </div>
+
+              <!-- var timestamp -->
+              <div class="mb-2 mx-2">
+                <div class="row">
+                  <label for="varTimeStamp" class="form-label"
+                    >Variable Time Update</label
+                  >
+                </div>
+
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions2"
+                  id="inlineRadio3"
+                  value="r"
+                />
+                <label class="form-check-label mx-2" for="inlineRadio3"
+                  >Periodically</label
+                >
+                <input
+                  class="form-check-input mx-2"
+                  type="radio"
+                  name="inlineRadioOptions2"
+                  id="inlineRadio3"
+                  value="r"
+                />
+                <label class="form-check-label" for="inlineRadio3"
+                  >On Update</label
+                >
+                <div class="mt-2">
+                  <label for="varID" class="form-label">Time Update (ms)</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                  />
+                </div>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
+
 export default {
   components: {
     VueGoodTable,
@@ -128,6 +290,12 @@ export default {
     return {
       title: 'Manage Projects',
       data: true,
+      formula: '',
+      dataTimeUpdateOption: [
+        { value: 'o', label: 'On Change' },
+        { value: 'p', label: 'Periodically' },
+      ],
+      datatypeOption: ['integer', 'float/double', 'boolean', 'formula'],
       deviceoption: [
         { devicetype: 'ESP8266', devicename: 'device1', id: '1' },
         { devicetype: 'ESP32', devicename: 'device2', id: '2' },

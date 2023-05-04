@@ -44,16 +44,17 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <b-button
-                    :to="`/admin/tipe-anggota/${props.row.id}`"
-                    type="button"
-                    class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
-                  >
-                    <i
-                      class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
-                    ></i>
-                    Detail
-                  </b-button>
+                  <router-link :to="`/device/${props.row.deviceID}`">
+                    <b-button
+                      type="button"
+                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
+                    >
+                      <i
+                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                      ></i>
+                      Detail
+                    </b-button>
+                  </router-link>
                   <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
                                         Detail

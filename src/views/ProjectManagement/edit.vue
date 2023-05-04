@@ -2,7 +2,7 @@
   <div class="AddProject">
     <div class="row mx-3">
       <div class="col md-12">
-        <div class="card text-white bg-dark mb-3">
+        <div class="card mb-3">
           <div class="card-header" style="font-size: 20pt">Edit Project</div>
           <div class="card-body">
             <!-- <p class="card-text">
