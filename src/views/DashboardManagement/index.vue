@@ -6,7 +6,7 @@
         <h4 class="card-title mb-0 flex-grow-1">Daftar Dashboard</h4>
         <router-link
           class="btn btn-primary justify-content-end"
-          to="/admin/tipe-anggota/add"
+          :to="`/dashboard/${this.dashboardIDNew}`"
         >
           <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
           Tambah Dashboard
@@ -44,6 +44,9 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
+                  <router-link
+                    :to="`/dashboard/${props.row.dashboardID}`"
+                  ></router-link>
                   <b-button
                     :to="`/admin/tipe-anggota/${props.row.id}`"
                     type="button"
@@ -112,6 +115,7 @@ export default {
     return {
       title: 'Manage Projects',
       data: true,
+      dashboardIDNew: 0,
       dummy: {
         rows: [
           {
@@ -151,7 +155,9 @@ export default {
       ],
     }
   },
-  created() {},
+  created() {
+    this.dashboardIDNew = this.dummy.rows.length + 1
+  },
 }
 </script>
 
