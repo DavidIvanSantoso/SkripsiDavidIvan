@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- Goods tables -->
-    <div class="card">
+    <div class="card" style="width: 100%">
       <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Daftar Dashboard</h4>
         <router-link
