@@ -90,7 +90,8 @@
       //4. Line Chart
       //5. Pie Chart
       //6. Vertical Bar Chart
-      //7. LED -->
+      //7. LED 
+       8.Stepper -->
           <section v-if="item.widgettype === 1">
             <Value></Value>
           </section>
@@ -112,6 +113,9 @@
           <section v-else-if="item.widgettype === 7">
             <LedVue></LedVue>
           </section>
+          <section v-else-if="item.widgettype === 8">
+            <StepperVue></StepperVue>
+          </section>
         </grid-item>
       </template>
     </grid-layout>
@@ -126,6 +130,7 @@ import SwitchVue from '../WidgetsComponent/Switch.vue'
 import PieChart from '../WidgetsComponent/PieChart.vue'
 import VerticalBarChartVue from '../WidgetsComponent/VeritcalBarChart.vue'
 import LedVue from '../WidgetsComponent/Led.vue'
+import StepperVue from '../WidgetsComponent/Stepper.vue'
 
 export default {
   components: {
@@ -136,6 +141,7 @@ export default {
     PieChart,
     VerticalBarChartVue,
     LedVue,
+    StepperVue,
   },
   data() {
     return {
@@ -201,6 +207,12 @@ export default {
           widgettype: 7,
           icon: 'bi bi-pencil-fill',
         },
+        {
+          widgetid: 8,
+          widgetname: 'Stepper',
+          widgettype: 8,
+          icon: 'bi bi-pencil-fill',
+        },
       ],
     }
   },
@@ -219,8 +231,8 @@ export default {
       //5. Pie Chart
       //6. Vertical Bar Chart
       //7. LED
-      if (val === 1 || val === 2 || val === 3 || val === 7) {
-        newW = 2
+      if (val === 1 || val === 2 || val === 3 || val === 7 || val === 8) {
+        newW = 2.5
         newH = 4.5
       } else if (val === 4 || val === 5 || val === 6) {
         newW = 5.5
