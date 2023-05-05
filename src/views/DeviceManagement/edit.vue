@@ -1,8 +1,8 @@
 <template>
   <div class="addDevice">
-    <div class="card">
-      <div class="card-header">Edit Device Information</div>
-      <div class="card-body">
+    <div class="card" style="width: 100%">
+      <div class="card-header" style="width: 100%">Edit Device Information</div>
+      <div class="card-body" style="width: 100%">
         <!-- Form Input Data -->
         <section>
           <div class="row">
@@ -195,4 +195,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.card {
+  width: 100% !important;
+}
+</style>

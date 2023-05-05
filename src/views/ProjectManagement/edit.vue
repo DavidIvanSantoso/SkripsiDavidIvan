@@ -1,6 +1,6 @@
 <template>
   <div class="AddProject">
-    <div class="row mx-3">
+    <div class="row mx-3" style="width: 100%">
       <div class="col md-12">
         <div class="card mb-3">
           <div class="card-header" style="font-size: 20pt">Edit Project</div>
@@ -32,7 +32,7 @@
               </div>
             </form>
             <div class="button mt-4">
-              <button class="btn btn-light">Submit</button>
+              <button class="btn btn-success">Submit</button>
             </div>
           </div>
         </div>

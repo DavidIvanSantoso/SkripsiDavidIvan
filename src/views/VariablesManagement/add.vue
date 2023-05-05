@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" style="width: 100% !important">
     <!-- card cloud var -->
     <div class="col md-8">
       <div class="card">
@@ -370,4 +370,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.card {
+  width: 100%;
+}
+</style>
