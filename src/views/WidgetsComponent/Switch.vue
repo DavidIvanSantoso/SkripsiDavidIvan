@@ -11,9 +11,14 @@
         <i class="bi bi-three-dots-vertical"></i>
       </button>
     </div>
-    <div class="card-body">
-      <div class="card-text mt-2" id="varData" :v-model="vardata">
-        {{ vardata }}
+    <div class="card-body align-items-center">
+      <div class="form-check form-switch mt-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
       </div>
     </div>
   </div>
@@ -21,10 +26,9 @@
 
 <script>
 export default {
-  components: {},
   data() {
     return {
-      vardata: 0,
+      varbuttontext: 'Button',
       vartitle: 'Title',
     }
   },
@@ -32,11 +36,8 @@ export default {
 </script>
 
 <style>
-.card {
-  width: max-content;
-  height: max-content;
-}
-#varData {
-  font-size: 2rem;
+.form-check-input {
+  width: 4rem !important;
+  height: 2rem !important;
 }
 </style>

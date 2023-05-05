@@ -12,8 +12,9 @@
       </button>
     </div>
     <div class="card-body">
-      <div class="card-text mt-2" id="varData" :v-model="vardata">
-        {{ vardata }}
+      <div class="row">
+        <div class="col"><div class="buttonCircle"></div></div>
+        <div class="col mt-3"><h5>On</h5></div>
       </div>
     </div>
   </div>
@@ -38,5 +39,17 @@ export default {
 }
 #varData {
   font-size: 2rem;
+}
+.buttonCircle {
+  background-color: black;
+  border: none;
+  color: gray;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 50%;
 }
 </style>

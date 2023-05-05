@@ -14,8 +14,8 @@
     <div class="card-body align-items-center">
       <!-- graph component -->
       <apexchart
-        width="500"
-        type="line"
+        width="400"
+        type="bar"
         :options="options"
         :series="series"
       ></apexchart>
@@ -38,8 +38,40 @@ export default {
       },
       series: [
         {
-          name: 'series-1',
-          data: [30, 40, 45, 50, 49, 60, 70, 91],
+          data: [
+            {
+              x: 'category A',
+              y: 10,
+            },
+            {
+              x: 'category B',
+              y: 18,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+            {
+              x: 'category C',
+              y: 13,
+            },
+          ],
         },
       ],
     }

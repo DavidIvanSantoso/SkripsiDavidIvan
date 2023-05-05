@@ -26,7 +26,7 @@ export default [
     component: 'CNavItem',
     name: 'Devices',
     to: '/device/index',
-    icon: 'cil-description',
+    icon: 'bi bi-cpu-fill',
     badge: {
       color: 'primary',
     },
@@ -35,7 +35,7 @@ export default [
     component: 'CNavItem',
     name: 'IoT Variables',
     to: '/variables/index',
-    icon: 'cil-description',
+    icon: 'bi bi-collection-fill',
     badge: {
       color: 'primary',
     },

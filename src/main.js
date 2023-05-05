@@ -11,7 +11,10 @@ import VueGoodTablePlugin from 'vue-good-table';
 import VueGoodTablePlugin2 from 'vue-good-table-next';
 import Bootstrap from 'bootstrap';
 import BootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
-
+import VueApexCharts from 'vue3-apexcharts';
+import VueGridLayout from 'vue-grid-layout';
+import GridLayout from 'vue3-drr-grid-layout';
+ 
 
 
 
@@ -19,6 +22,8 @@ import BootstrapCSS from 'bootstrap/dist/css/bootstrap.min.css';
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+ import 'vue3-drr-grid-layout/dist/style.css'
+
 
 const app = createApp(App)
 app.use(store)
@@ -31,6 +36,9 @@ app.use(VueGoodTablePlugin);
 app.use(VueGoodTablePlugin2);
 app.use(Bootstrap);
 app.use(BootstrapCSS);
+app.use(VueApexCharts);
+app.use(VueGridLayout);
+app.use(GridLayout);
 
 
 
