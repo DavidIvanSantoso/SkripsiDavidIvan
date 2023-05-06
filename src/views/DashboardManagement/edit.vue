@@ -1,5 +1,7 @@
 <template>
   <div class="dashboard">
+    <!-- Link Variables -->
+
     <div class="row">
       <nav
         class="navbar navbar-expand-lg navbar-dark bg-success rounded-top align-items-center"
@@ -92,33 +94,417 @@
       //6. Vertical Bar Chart
       //7. LED 
        8.Stepper -->
-          <section v-if="item.widgettype === 1">
-            <Value></Value>
-          </section>
-          <section v-else-if="item.widgettype === 2">
-            <Button></Button>
-          </section>
-          <section v-else-if="item.widgettype === 3">
-            <SwitchVue></SwitchVue>
-          </section>
-          <section v-else-if="item.widgettype === 4">
-            <LineChart></LineChart>
-          </section>
-          <section v-else-if="item.widgettype === 5">
-            <PieChart></PieChart>
-          </section>
-          <section v-else-if="item.widgettype === 6">
-            <VerticalBarChartVue></VerticalBarChartVue>
-          </section>
-          <section v-else-if="item.widgettype === 7">
-            <LedVue></LedVue>
-          </section>
-          <section v-else-if="item.widgettype === 8">
-            <StepperVue></StepperVue>
-          </section>
+          <!-- ----------------------------------------------------------------- -->
+          <div class="row px-3">
+            <div class="card mt-3" style="width: 100% !important">
+              <div class="card-header align-items-center d-flex">
+                <div
+                  class="card-text flex-grow-1 mx-2"
+                  :v-model="item.widgetTitleName"
+                >
+                  {{ item.widgetTitleName }}
+                </div>
+                <button
+                  class="btn btn-dark d-flex mx-1"
+                  @click="removeWidgets(item.i)"
+                >
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+                <button
+                  class="btn btn-dark d-flex p"
+                  data-bs-toggle="modal"
+                  :data-bs-target="item.modalTarget"
+                >
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+              </div>
+              <div class="card-body">
+                <section v-if="item.widgettype === 1">
+                  <Value></Value>
+                </section>
+                <section v-else-if="item.widgettype === 2">
+                  <Button></Button>
+                </section>
+                <section v-else-if="item.widgettype === 3">
+                  <SwitchVue></SwitchVue>
+                </section>
+                <section v-else-if="item.widgettype === 4">
+                  <LineChart></LineChart>
+                </section>
+                <section v-else-if="item.widgettype === 5">
+                  <PieChart></PieChart>
+                </section>
+                <section v-else-if="item.widgettype === 6">
+                  <VerticalBarChartVue></VerticalBarChartVue>
+                </section>
+                <section v-else-if="item.widgettype === 7">
+                  <LedVue></LedVue>
+                </section>
+                <section v-else-if="item.widgettype === 8">
+                  <StepperVue></StepperVue>
+                </section>
+              </div>
+            </div>
+          </div>
+          <!-- ----------------------------------------------------------------- -->
         </grid-item>
       </template>
     </grid-layout>
+  </div>
+
+  <!-- modal value -->
+  <div
+    id="alertModalButton"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">Button Configuration</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <select class="form-select" aria-label="Default select example">
+                  <option
+                    v-for="item in varDummy"
+                    :key="item.varid"
+                    :value="item.varid"
+                  >
+                    {{ item.varname }}
+                  </option>
+                </select>
+              </div>
+              <!-- Button Text -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Button Text</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  v-model="varDummy[0].btntext"
+                />
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal button -->
+  <div
+    id="alertModalValue"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">Value Configuration</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <select class="form-select" aria-label="Default select example">
+                  <option
+                    v-for="item in varDummy"
+                    :key="item.varid"
+                    :value="item.varid"
+                  >
+                    {{ item.varname }}
+                  </option>
+                </select>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal switch -->
+  <div
+    id="alertModalSwitch"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">Switch Configuration</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <select class="form-select" aria-label="Default select example">
+                  <option
+                    v-for="item in varDummy"
+                    :key="item.varid"
+                    :value="item.varid"
+                  >
+                    {{ item.varname }}
+                  </option>
+                </select>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal LED -->
+  <div
+    id="alertModalLED"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">LED Configuration</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <select class="form-select" aria-label="Default select example">
+                  <option
+                    v-for="item in varDummy"
+                    :key="item.varid"
+                    :value="item.varid"
+                  >
+                    {{ item.varname }}
+                  </option>
+                </select>
+              </div>
+              <!-- color picker -->
+              <div class="mb-2 mx-2">
+                <div class="row">
+                  <label for="varName" class="form-label"
+                    >Choose LED Color</label
+                  >
+                  <div class="row">
+                    <color-picker
+                      v-model:pureColor="pureColor"
+                      v-model:gradientColor="gradientColor"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- modal Line Chart -->
+  <div
+    id="alertModalLineChart"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">
+              Line Chart Configuration
+            </h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <VueMultiselect v-model="selected" :options="options">
+                </VueMultiselect>
+                <!-- <Multiselect></Multiselect> -->
+              </div>
+              <!-- color picker -->
+              <!-- <div class="mb-2 mx-2">
+                <div class="row">
+                  <label for="varName" class="form-label"
+                    >Choose LED Color</label
+                  >
+                  <div class="row">
+                    <color-picker
+                      v-model:pureColor="pureColor"
+                      v-model:gradientColor="gradientColor"
+                    />
+                  </div>
+                </div>
+              </div> -->
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -131,6 +517,9 @@ import PieChart from '../WidgetsComponent/PieChart.vue'
 import VerticalBarChartVue from '../WidgetsComponent/VeritcalBarChart.vue'
 import LedVue from '../WidgetsComponent/Led.vue'
 import StepperVue from '../WidgetsComponent/Stepper.vue'
+import { ColorInputWithoutInstance } from 'tinycolor2'
+import { ref } from 'vue'
+import VueMultiselect from 'vue-multiselect'
 
 export default {
   components: {
@@ -142,11 +531,32 @@ export default {
     VerticalBarChartVue,
     LedVue,
     StepperVue,
+    VueMultiselect,
+  },
+  setup() {
+    const pureColor = ref < ColorInputWithoutInstance > 'red'
+    const gradientColor = ref(
+      'linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%)',
+    )
+
+    return { pureColor, gradientColor }
   },
   data() {
     return {
+      //multiselect data
+      selected: null,
+      options: ['list', 'of', 'options'],
       layout: [
-        // { x: 0, y: 0, w: 2, h: 4.5, i: '0', widgettype: 1 },
+        {
+          x: 0,
+          y: 0,
+          w: 3,
+          h: 4.5,
+          i: '0',
+          widgettype: 4,
+          widgetTitleName: 'Hoi',
+          modalTarget: '#alertModalLineChart',
+        },
         // { x: 2, y: 0, w: 2, h: 4.5, i: '1', widgettype: 2 },
         // { x: 4, y: 0, w: 2, h: 4.5, i: '2', widgettype: 3 },
         // { x: 6, y: 0, w: 5.5, h: 11.5, i: '3', widgettype: 4 },
@@ -170,6 +580,7 @@ export default {
           widgetname: 'Value',
           widgettype: 1,
           icon: 'bi bi-aspect-ratio-fill',
+          modalTarget: '#alertModalValue',
         },
         {
           widgetid: 2,
@@ -214,12 +625,28 @@ export default {
           icon: 'bi bi-pencil-fill',
         },
       ],
+      varDummy: [
+        { varid: 1, varname: 'Test1', btntext: 'AAAA' },
+        { varid: 2, varname: 'Test2', btntext: 'ButtonTest1' },
+        { varid: 3, varname: 'Test3', btntext: 'ButtonTest1' },
+        { varid: 4, varname: 'Test4', btntext: 'ButtonTest1' },
+      ],
     }
   },
   methods: {
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+      }
+      this.options.push(tag)
+      this.value.push(tag)
+    },
     addWidgets(val) {
       let newW = 0
       let newH = 0
+      let modalTarget = ''
+
       //note size Widgets
       //value,led,button, switch (h:4.5 , w:2)
       //all chart (h:5.5, h:11,5)
@@ -231,12 +658,43 @@ export default {
       //5. Pie Chart
       //6. Vertical Bar Chart
       //7. LED
+
+      //size widgets
       if (val === 1 || val === 2 || val === 3 || val === 7 || val === 8) {
         newW = 2.5
         newH = 4.5
       } else if (val === 4 || val === 5 || val === 6) {
         newW = 5.5
         newH = 11.5
+      }
+
+      //modalTarget
+
+      switch (val) {
+        case 1:
+          modalTarget = '#alertModalValue'
+          break
+        case 2:
+          modalTarget = '#alertModalButton'
+          break
+        case 3:
+          modalTarget = '#alertModalSwitch'
+          break
+        case 4:
+          modalTarget = '#alertModalLineChart'
+          break
+        case 5:
+          modalTarget = '#alertModalPieChart'
+          break
+        case 6:
+          modalTarget = '#alertModalVerticalBarChart'
+          break
+        case 7:
+          modalTarget = '#alertModalLED'
+          break
+        case 8:
+          modalTarget = '#alertModalStepper'
+          break
       }
 
       this.layout.push({
@@ -247,12 +705,45 @@ export default {
         h: newH,
         i: this.index,
         widgettype: val,
+        widgetTitleName: 'Empty Title',
+        modalTarget: modalTarget,
       })
+      console.log('Test')
       this.index++
     },
     removeWidgets(val) {
       const index = this.layout.map((item) => item.i).indexOf(val)
       this.layout.splice(index, 1)
+    },
+    checkTypeModal(val) {
+      switch (val) {
+        case 1:
+          this.modalTarget = '#alertModalValue'
+          break
+        case 2:
+          this.modalTarget = '#alertModalButton'
+          break
+        case 3:
+          this.modalTarget = '#alertModalSwitch'
+          break
+        case 4:
+          this.modalTarget = '#alertModalLineChart'
+          break
+        case 5:
+          this.modalTarget = '#alertModalPieChart'
+          break
+        case 6:
+          this.modalTarget = '#alertModalVerticalBarChart'
+          break
+        case 7:
+          this.modalTarget = '#alertModalLED'
+          break
+        case 8:
+          this.modalTarget = '#alertModalStepper'
+          break
+      }
+      this.modalTarget = ''
+      console.log('TESTING MODAL ID', this.modalTarget)
     },
   },
   mounted() {
@@ -262,7 +753,7 @@ export default {
 </script>
 
 <style>
-/* .layoutJSON {
+.layoutJSON {
   background: #ddd;
   border: 1px solid black;
   margin-top: 10px;
@@ -333,5 +824,5 @@ export default {
   position: absolute;
   background-repeat: repeat;
   margin: 5px;
-} */
+}
 </style>
