@@ -3,13 +3,13 @@
     <!-- Goods tables -->
     <div class="card" style="width: 100%">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Daftar Project</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Daftar Shared User Access</h4>
         <router-link
           class="btn btn-primary justify-content-end"
-          to="/project/add"
+          to="/shareuser/add"
         >
-          <i class="bi bi-plus-lg"></i>
-          Tambah Project
+          <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
+          Add Share User Access
         </router-link>
       </div>
       <!-- GoodTable -->
@@ -47,17 +47,14 @@
                   <router-link :to="`/project/${props.row.projectId}`">
                     <b-button
                       type="button"
-                      class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
+                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
                     >
-                      <i class="bi bi-pencil-fill"></i>
+                      <i
+                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                      ></i>
+                      Detail
                     </b-button>
                   </router-link>
-                  <b-button
-                    type="button"
-                    class="btn btn-danger btn-sm btn-label waves-effect waves-light rounded-pill mx-1"
-                  >
-                    <i class="bi bi-trash-fill"></i>
-                  </b-button>
                   <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
                                         Detail
@@ -115,37 +112,37 @@ export default {
       dummy: {
         rows: [
           {
-            projectId: 1,
-            projectName: 'Project1',
-            projectDesc: 'Desct1',
+            dashboardid: 1,
+            dashboardtitle: 'Project1',
+            sharedaccountcnt: 'Desct1',
             lastAccess: 'yyyy/mm/dd',
           },
           {
-            projectId: 2,
-            projectName: 'Project1',
-            projectDesc: 'Desct1',
+            dashboardid: 2,
+            dashboardtitle: 'Project1',
+            sharedaccountcnt: 'Desct1',
             lastAccess: 'yyyy/mm/dd',
           },
           {
-            projectId: 3,
-            projectName: 'Project1',
-            projectDesc: 'Desct1',
+            dashboardid: 3,
+            dashboardtitle: 'Project1',
+            sharedaccountcnt: 'Desct1',
             lastAccess: 'yyyy/mm/dd',
           },
         ],
       },
       columns: [
         {
-          label: 'Project ID',
-          field: 'projectId',
+          label: 'Dashboard ID',
+          field: 'dashboardid',
         },
         {
-          label: 'Project Name',
-          field: 'projectName',
+          label: 'Dashboard Title',
+          field: 'dashboardtitle',
         },
         {
-          label: 'Description',
-          field: 'projectDesc',
+          label: 'Shared Account Count',
+          field: 'sharedaccountcnt',
         },
         {
           label: 'Last Access',

@@ -5,6 +5,8 @@
     type="line"
     :options="options"
     :series="series"
+    :stroke="options.stroke.curve"
+    :markers="options.markers"
   ></apexchart>
 </template>
 
@@ -14,6 +16,12 @@ export default {
     return {
       vartitle: 'Title',
       options: {
+        stroke: {
+          curve: 'straight',
+        },
+        markers: {
+          size: 1,
+        },
         chart: {
           id: 'vuechart-example',
         },

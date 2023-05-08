@@ -8,7 +8,7 @@
           class="btn btn-primary justify-content-end"
           to="/variables/add"
         >
-          <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
+          <i class="bi bi-plus-lg"></i>
           Tambah Cloud Variables
         </router-link>
       </div>
@@ -47,14 +47,17 @@
                   <router-link :to="`/variables/${props.row.deviceid}`">
                     <b-button
                       type="button"
-                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
+                      class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
                     >
-                      <i
-                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
-                      ></i>
-                      Detail
+                      <i class="bi bi-pencil-fill"></i>
                     </b-button>
                   </router-link>
+                  <b-button
+                    type="button"
+                    class="btn btn-danger mx-1 btn-sm btn-label waves-effect waves-light rounded-pill"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </b-button>
                 </span>
 
                 <span v-else>

@@ -11,6 +11,7 @@
             data-bs-toggle="modal"
             data-bs-target="#alertModal"
           >
+            <i class="bi bi-plus-lg"></i>
             Add Cloud Variables
           </button>
         </div>
@@ -520,8 +521,4 @@ export default {
 }
 </script>
 
-<style>
-.card {
-  width: 100%;
-}
-</style>
+<style></style>

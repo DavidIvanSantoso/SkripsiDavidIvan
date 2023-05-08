@@ -25,10 +25,10 @@
       /> -->
     </CSidebarBrand>
     <AppSidebarNav />
-    <CSidebarToggler
+    <!-- <CSidebarToggler
       class="d-none d-lg-flex"
       @click="$store.commit('toggleUnfoldable')"
-    />
+    /> -->
   </CSidebar>
 </template>
 

@@ -269,7 +269,7 @@
               </CDropdownMenu>
             </CDropdown>
             <CDropdown variant="btn-group" direction="dropup">
-              <CButton color="secondary">Small split button</CButton>
+              <!-- <CButton color="secondary">Small split button</CButton> -->
               <CDropdownToggle color="secondary" split />
               <CDropdownMenu>
                 <CDropdownItem href="#">Action</CDropdownItem>

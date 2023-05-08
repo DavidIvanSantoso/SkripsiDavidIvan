@@ -4,12 +4,14 @@
       <CHeaderToggler class="ps-1" @click="$store.commit('toggleSidebar')">
         <CIcon icon="cil-menu" size="lg" />
       </CHeaderToggler>
-      <CHeaderBrand class="mx-auto d-lg-none" to="/">
+      <!-- <CHeaderBrand class="mx-auto d-lg-none" to="/">
         <CIcon :icon="logo" height="48" alt="Logo" />
-      </CHeaderBrand>
+      </CHeaderBrand> -->
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
-          <CNavLink href="/dashboard"> Dashboard </CNavLink>
+          <router-link to="/project/index" style="text-decoration: none">
+            <CNavLink> Home </CNavLink>
+          </router-link>
         </CNavItem>
         <CNavItem>
           <CNavLink href="#">Users</CNavLink>
@@ -20,6 +22,9 @@
       </CHeaderNav>
       <CHeaderNav>
         <CNavItem>
+          <CNavLink>Logout</CNavLink>
+        </CNavItem>
+        <!-- <CNavItem>
           <CNavLink href="#">
             <CIcon class="mx-2" icon="cil-bell" size="lg" />
           </CNavLink>
@@ -34,7 +39,7 @@
             <CIcon class="mx-2" icon="cil-envelope-open" size="lg" />
           </CNavLink>
         </CNavItem>
-        <AppHeaderDropdownAccnt />
+        <AppHeaderDropdownAccnt /> -->
       </CHeaderNav>
     </CContainer>
     <CHeaderDivider />
@@ -46,13 +51,13 @@
 
 <script>
 import AppBreadcrumb from './AppBreadcrumb'
-import AppHeaderDropdownAccnt from './AppHeaderDropdownAccnt'
+// import AppHeaderDropdownAccnt from './AppHeaderDropdownAccnt'
 import { logo } from '@/assets/brand/logo'
 export default {
   name: 'AppHeader',
   components: {
     AppBreadcrumb,
-    AppHeaderDropdownAccnt,
+    // AppHeaderDropdownAccnt,
   },
   setup() {
     return {

@@ -77,11 +77,16 @@ import {
   cilUserFemale,
   cilUserFollow,
   cilXCircle,
+  cilChartLine,
+  cilCloud,
+  
 } from '@coreui/icons'
 
 export const iconsSet = Object.assign(
   {},
   {
+    cilCloud,
+    cilChartLine,
     cilArrowBottom,
     cilArrowRight,
     cilArrowTop,

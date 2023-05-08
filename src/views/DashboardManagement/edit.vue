@@ -464,8 +464,18 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <VueMultiselect v-model="selected" :options="options">
-                </VueMultiselect>
+                <VueMultiselect
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                ></VueMultiselect>
+
                 <!-- <Multiselect></Multiselect> -->
               </div>
               <!-- color picker -->
@@ -482,6 +492,287 @@
                   </div>
                 </div>
               </div> -->
+
+              <!-- Axis Settings -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Axis Settings</label>
+                <div class="row">
+                  <div class="col">
+                    <label for="varID" class="form-label">X Axis</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-describedby="emailHelp"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="varID" class="form-label">Y Axis</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-describedby="emailHelp"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal Pie Chart -->
+  <div
+    id="alertModalPieChart"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">
+              Pie Chart Configuration
+            </h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <VueMultiselect
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                ></VueMultiselect>
+
+                <!-- <Multiselect></Multiselect> -->
+              </div>
+              <!-- color picker -->
+              <!-- <div class="mb-2 mx-2">
+                <div class="row">
+                  <label for="varName" class="form-label"
+                    >Choose LED Color</label
+                  >
+                  <div class="row">
+                    <color-picker
+                      v-model:pureColor="pureColor"
+                      v-model:gradientColor="gradientColor"
+                    />
+                  </div>
+                </div>
+              </div> -->
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal Vertical Bar Chart -->
+  <div
+    id="alertModalVerticalBarChart"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">
+              Vertical Bar Chart Configuration
+            </h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <VueMultiselect
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                ></VueMultiselect>
+
+                <!-- <Multiselect></Multiselect> -->
+              </div>
+              <!-- color picker -->
+              <!-- <div class="mb-2 mx-2">
+                <div class="row">
+                  <label for="varName" class="form-label"
+                    >Choose LED Color</label
+                  >
+                  <div class="row">
+                    <color-picker
+                      v-model:pureColor="pureColor"
+                      v-model:gradientColor="gradientColor"
+                    />
+                  </div>
+                </div>
+              </div> -->
+
+              <!-- Axis Settings -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Axis Settings</label>
+                <div class="row">
+                  <div class="col">
+                    <label for="varID" class="form-label">X Axis</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-describedby="emailHelp"
+                    />
+                  </div>
+                  <div class="col">
+                    <label for="varID" class="form-label">Y Axis</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-describedby="emailHelp"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal Stepper -->
+  <div
+    id="alertModalStepper"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">Stepper Configuration</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Widget Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
+              <!-- Link Variables -->
+              <div class="mb-2 mx-2">
+                <label for="varName" class="form-label"
+                  >Link to Variables</label
+                >
+                <select class="form-select" aria-label="Default select example">
+                  <option
+                    v-for="item in varDummy"
+                    :key="item.varid"
+                    :value="item.varid"
+                  >
+                    {{ item.varname }}
+                  </option>
+                </select>
+              </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
               <button
@@ -544,8 +835,12 @@ export default {
   data() {
     return {
       //multiselect data
-      selected: null,
-      options: ['list', 'of', 'options'],
+      value: [{ name: 'Javascript', code: 'js' }],
+      options: [
+        { name: 'Vue.js', code: 'vu' },
+        { name: 'Javascript', code: 'js' },
+        { name: 'Open Source', code: 'os' },
+      ],
       layout: [
         {
           x: 0,

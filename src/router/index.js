@@ -82,22 +82,22 @@ const routes = [
         name: 'VariablesEdit',
         component: () => import('@/views/VariablesManagement/edit.vue'),
       },
-      //Share User
-      // {
-      //   path: '/shareuser/:id',
-      //   name: 'UserEdit',
-      //   component: () => import('@/views/VariablesManagement/edit.vue'),
-      // },
-      // {
-      //   path: '/shareuser/add',
-      //   name: 'UserAdd',
-      //   component: () => import('@/views/VariablesManagement/edit.vue'),
-      // },
-      // {
-      //   path: '/variables',
-      //   name: 'User',
-      //   component: () => import('@/views/VariablesManagement/edit.vue'),
-      // },
+      // Share User
+      {
+        path: '/shareuser/:id',
+        name: 'UserEdit',
+        component: () => import('@/views/ShareUserManagement/edit.vue'),
+      },
+      {
+        path: '/shareuser/add',
+        name: 'UserAdd',
+        component: () => import('@/views/ShareUserManagement/add.vue'),
+      },
+      {
+        path: '/shareuser/index',
+        name: 'UserIndex',
+        component: () => import('@/views/ShareUserManagement/index.vue'),
+      },
       //--------------------------------------------PAGES PLATFORM IOT END HERE-----------------------------------------------
       {
         path: '/theme',

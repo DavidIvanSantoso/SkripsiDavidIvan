@@ -8,7 +8,7 @@
           class="btn btn-primary justify-content-end"
           to="/project/add"
         >
-          <i class="bi bi-plus-lg"></i>
+          <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
           Tambah Project
         </router-link>
       </div>
@@ -47,17 +47,14 @@
                   <router-link :to="`/project/${props.row.projectId}`">
                     <b-button
                       type="button"
-                      class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
+                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
                     >
-                      <i class="bi bi-pencil-fill"></i>
+                      <i
+                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                      ></i>
+                      Detail
                     </b-button>
                   </router-link>
-                  <b-button
-                    type="button"
-                    class="btn btn-danger btn-sm btn-label waves-effect waves-light rounded-pill mx-1"
-                  >
-                    <i class="bi bi-trash-fill"></i>
-                  </b-button>
                   <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
                                         Detail
