@@ -103,13 +103,22 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     VueGoodTable,
   },
+  computed: {
+    ...mapState('projects', ['projects']),
+  },
+  methods: {
+    ...mapActions('projects', ['fetchProjectsAll']),
+  },
+
   data() {
     return {
+      mockAPI: {},
       title: 'Manage Projects',
       data: true,
       dummy: {
@@ -158,7 +167,11 @@ export default {
       ],
     }
   },
-  created() {},
+  async created() {
+    await this.fetchProjectsAll()
+    this.mockAPI = { ...this.projects.data }
+    console.log('MOCK DATA' + this.mockAPI)
+  },
 }
 </script>
 

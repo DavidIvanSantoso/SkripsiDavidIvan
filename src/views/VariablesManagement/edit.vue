@@ -1,126 +1,205 @@
 <template>
   <div class="row" style="width: 100%">
-    <!-- card cloud var -->
-    <div class="col md-8">
-      <div class="card">
-        <div class="card-header align-items-center d-flex">
-          <h6 class="card-title mb-0 flex-grow-1">Cloud Variables</h6>
-          <button
-            class="btn btn-success"
-            style="color: aliceblue"
-            data-bs-toggle="modal"
-            data-bs-target="#alertModal"
+    <!-- multiple tab -->
+    <!-- Tabs navs -->
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link active"
+              id="ex1-tab-1"
+              data-bs-toggle="tab"
+              href="#cloudVar"
+              role="tab"
+              aria-controls="ex1-tabs-1"
+              aria-selected="true"
+              >Cloud Variables And Device Settings</a
+            >
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              id="ex1-tab-2"
+              data-bs-toggle="tab"
+              href="#templateCode"
+              role="tab"
+              aria-controls="ex1-tabs-2"
+              aria-selected="false"
+              >Template Code</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div
+            class="tab-pane fade show active"
+            id="cloudVar"
+            role="tabpanel"
+            aria-labelledby="ex1-tab-1"
           >
-            <i class="bi bi-plus-lg"></i>
-            Add Cloud Variables
-          </button>
-        </div>
-        <div class="card-body h-100">
-          <div class="p-3">
-            <template v-if="dummy?.rows">
-              <div class="table-responsive table-card">
-                <vue-good-table
-                  :columns="columns"
-                  :rows="dummy.rows"
-                  :search-options="{
-                    enabled: true,
-                    trigger: 'enter',
-                    skipDiacritics: true,
-                    placeholder: 'Cari berdasarkan nama..',
-                  }"
-                  :pagination-options="{
-                    enabled: true,
-                    perPage: 10,
-                    position: 'bottom',
-                    perPageDropdown: [10, 20, 100],
-                    dropdownAllowAll: false,
-                    setCurrentPage: 1,
-                    jumpFirstOrLast: true,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Data tampil',
-                    ofLabel: 'of',
-                    pageLabel: 'page',
-                    allLabel: 'All',
-                    infoFn: (params) => `Halaman ${params.firstRecordOnPage}`,
-                  }"
-                >
-                  <template v-slot:table-row="props">
-                    <span v-if="props.column.field === 'action'">
-                      <b-button
-                        data-bs-toggle="modal"
-                        data-bs-target="#alertModalEdit"
-                        type="button"
-                        class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
-                      >
-                        <i
-                          class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
-                        ></i>
-                        Detail
-                      </b-button>
-                      <!-- <router-link class="btn btn-sm btn-success"
+            <div class="row">
+              <!-- card cloud var -->
+              <div class="col md-8">
+                <div class="card">
+                  <div class="card-header align-items-center d-flex">
+                    <h6 class="card-title mb-0 flex-grow-1">Cloud Variables</h6>
+                    <button
+                      class="btn btn-success"
+                      style="color: aliceblue"
+                      data-bs-toggle="modal"
+                      data-bs-target="#alertModal"
+                    >
+                      <i class="bi bi-plus-lg"></i>
+                      Add Cloud Variables
+                    </button>
+                  </div>
+                  <div class="card-body h-100">
+                    <div class="p-3">
+                      <template v-if="dummy?.rows">
+                        <div class="table-responsive table-card">
+                          <vue-good-table
+                            :columns="columns"
+                            :rows="dummy.rows"
+                            :search-options="{
+                              enabled: true,
+                              trigger: 'enter',
+                              skipDiacritics: true,
+                              placeholder: 'Cari berdasarkan nama..',
+                            }"
+                            :pagination-options="{
+                              enabled: true,
+                              perPage: 10,
+                              position: 'bottom',
+                              perPageDropdown: [10, 20, 100],
+                              dropdownAllowAll: false,
+                              setCurrentPage: 1,
+                              jumpFirstOrLast: true,
+                              nextLabel: 'next',
+                              prevLabel: 'prev',
+                              rowsPerPageLabel: 'Data tampil',
+                              ofLabel: 'of',
+                              pageLabel: 'page',
+                              allLabel: 'All',
+                              infoFn: (params) =>
+                                `Halaman ${params.firstRecordOnPage}`,
+                            }"
+                          >
+                            <template v-slot:table-row="props">
+                              <span v-if="props.column.field === 'action'">
+                                <b-button
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#alertModalEdit"
+                                  type="button"
+                                  class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
+                                >
+                                  <i
+                                    class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                                  ></i>
+                                  Detail
+                                </b-button>
+                                <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
                                         Detail
                                     </router-link> -->
-                    </span>
+                              </span>
 
-                    <span v-else>
-                      {{ props.formattedRow[props.column.field] }}
-                    </span>
-                  </template>
-                </vue-good-table>
-              </div>
-            </template>
-            <template v-else>
-              <div class="h-50 d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
+                              <span v-else>
+                                {{ props.formattedRow[props.column.field] }}
+                              </span>
+                            </template>
+                          </vue-good-table>
+                        </div>
+                      </template>
+                      <template v-else>
+                        <div class="h-50 d-flex justify-content-center">
+                          <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </template>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col md-4">
-      <div class="card">
-        <div class="card-header align-items-center d-flex">
-          <h6 class="card-title mb-0 flex-grow-1">Device Information</h6>
-          <button class="btn btn-success" style="color: aliceblue">
-            Confirm Device Information
-          </button>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="mb-3">
-              <label for="disabledSelect" class="form-label"
-                >Choose Your Device</label
-              >
-              <select id="disabledSelect" class="form-select">
-                <option
-                  v-for="item in deviceoption"
-                  :key="item.id"
-                  :value="item.devicename"
-                >
-                  {{ item.devicename }}
-                </option>
-              </select>
+              <div class="col md-4">
+                <div class="card">
+                  <div class="card-header align-items-center d-flex">
+                    <h6 class="card-title mb-0 flex-grow-1">
+                      Device Information
+                    </h6>
+                    <button class="btn btn-success" style="color: aliceblue">
+                      Confirm Device Information
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <form>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label"
+                          >Choose Your Device</label
+                        >
+                        <select id="disabledSelect" class="form-select">
+                          <option
+                            v-for="item in deviceoption"
+                            :key="item.id"
+                            :value="item.devicename"
+                          >
+                            {{ item.devicename }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label"
+                          >Device Type</label
+                        >
+                        <input
+                          disabled
+                          v-model="deviceoption[0].devicetype"
+                          type="text"
+                          id="disabledTextInput"
+                          class="form-control"
+                          placeholder="Disabled input"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="disabledTextInput" class="form-label"
-                >Device Type</label
-              >
-              <input
-                disabled
-                v-model="deviceoption[0].devicetype"
-                type="text"
-                id="disabledTextInput"
-                class="form-control"
-                placeholder="Disabled input"
-              />
+          </div>
+          <div
+            class="tab-pane fade"
+            id="templateCode"
+            role="tabpanel"
+            aria-labelledby="ex1-tab-2"
+          >
+            <div class="row">
+              <div class="row">
+                <h3>How To Use Our Template Code!</h3>
+                <hr class="hr" />
+              </div>
+              <div class="row">
+                <h5>
+                  Download
+                  <a href="https://www.arduino.cc/en/software">Arduino IDE</a>
+                </h5>
+              </div>
             </div>
-          </form>
+            <div class="row">
+              <div class="isiTemplate">
+                <div class="card">
+                  <div class="card-body">
+                    <pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
+&lt;p&gt;And another line of sample text here...&lt;/p&gt;
+</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            Template Code MAZEH
+          </div>
         </div>
       </div>
     </div>
