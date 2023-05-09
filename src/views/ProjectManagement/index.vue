@@ -14,11 +14,11 @@
       </div>
       <!-- GoodTable -->
       <div class="p-3">
-        <template v-if="dummy?.rows">
+        <template v-if="projects">
           <div class="table-responsive table-card">
             <vue-good-table
               :columns="columns"
-              :rows="dummy.rows"
+              :rows="projects"
               :search-options="{
                 enabled: true,
                 trigger: 'enter',
@@ -44,7 +44,7 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <router-link :to="`/project/${props.row.projectId}`">
+                  <router-link :to="`/project/${props.row.projectid}`">
                     <b-button
                       type="button"
                       class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
@@ -54,6 +54,7 @@
                   </router-link>
                   <b-button
                     type="button"
+                    @click="this.deleteProjectByID(props.row.projectid)"
                     class="btn btn-danger btn-sm btn-label waves-effect waves-light rounded-pill mx-1"
                   >
                     <i class="bi bi-trash-fill"></i>
@@ -99,6 +100,7 @@
       </div>
     </div>
   </div>
+  <div v-for="items in mockAPI.data" :key="items">{{ items.userid }}</div>
 </template>
 
 <script>
@@ -110,15 +112,25 @@ export default {
     VueGoodTable,
   },
   computed: {
-    ...mapState('projects', ['projects']),
+    ...mapState(['projects']),
   },
+  mounted() {},
   methods: {
-    ...mapActions('projects', ['fetchProjectsAll']),
+    ...mapActions(['fetchProjects', 'deleteProjectByID']),
   },
 
   data() {
     return {
-      mockAPI: {},
+      posts: [],
+      mockAPI: {
+        children: [
+          // {
+          //   projectid: 'Name',
+          //   projectname: 'Name',
+          //   projectdesc: 'name',
+          // },
+        ],
+      },
       title: 'Manage Projects',
       data: true,
       dummy: {
@@ -146,15 +158,15 @@ export default {
       columns: [
         {
           label: 'Project ID',
-          field: 'projectId',
+          field: 'projectid',
         },
         {
           label: 'Project Name',
-          field: 'projectName',
+          field: 'projectname',
         },
         {
           label: 'Description',
-          field: 'projectDesc',
+          field: 'projectdesc',
         },
         {
           label: 'Last Access',
@@ -168,9 +180,11 @@ export default {
     }
   },
   async created() {
-    await this.fetchProjectsAll()
-    this.mockAPI = { ...this.projects.data }
-    console.log('MOCK DATA' + this.mockAPI)
+    // await this.getAllProjects()
+    await this.fetchProjects()
+    console.log(this.projects)
+    this.mockAPI.children = this.projects
+    console.log('FINAL', this.mockAPI.children)
   },
 }
 </script>

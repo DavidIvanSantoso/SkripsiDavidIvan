@@ -13,6 +13,7 @@
               <div class="form-group">
                 <label for="exampleFormControlInput1">Project Name</label>
                 <input
+                  v-model="newData.projectname"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -24,6 +25,7 @@
                   >Project Description</label
                 >
                 <input
+                  v-model="newData.projectdesc"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -32,7 +34,9 @@
               </div>
             </form>
             <div class="button mt-4">
-              <button class="btn btn-success">Submit</button>
+              <button class="btn btn-success" @click="addProject(this.newData)">
+                Submit
+              </button>
             </div>
           </div>
         </div>
@@ -42,7 +46,27 @@
 </template>
 
 <script>
-export default {}
+import { mapState, mapActions } from 'vuex'
+export default {
+  components: {},
+  computed: {
+    ...mapState(['project']),
+  },
+  methods: {
+    ...mapActions(['addProject']),
+  },
+  data() {
+    return {
+      newData: {
+        userid: 1,
+        projectname: '',
+        projectdesc: '',
+        projectid: '100',
+      },
+    }
+  },
+  async created() {},
+}
 </script>
 
 <style></style>

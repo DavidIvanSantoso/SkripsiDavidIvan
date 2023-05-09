@@ -13,6 +13,7 @@
               <div class="form-group">
                 <label for="exampleFormControlInput1">Project Name</label>
                 <input
+                  v-model="this.project.projectname"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -24,6 +25,7 @@
                   >Project Description</label
                 >
                 <input
+                  v-model="this.project.projectdesc"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -32,7 +34,17 @@
               </div>
             </form>
             <div class="button mt-4">
-              <button class="btn btn-success">Submit</button>
+              <button
+                class="btn btn-success"
+                @click="
+                  this.updateProjectByID({
+                    id: this.newData.idproject,
+                    data: this.newData.data,
+                  })
+                "
+              >
+                Submit
+              </button>
             </div>
           </div>
         </div>
@@ -42,7 +54,29 @@
 </template>
 
 <script>
-export default {}
+import { mapState, mapActions } from 'vuex'
+export default {
+  methods: {
+    ...mapActions(['fetchProjectByID', 'updateProjectByID']),
+  },
+  computed: {
+    ...mapState(['project']),
+  },
+  data() {
+    return {
+      newData: {
+        idproject: null,
+        data: [],
+      },
+    }
+  },
+  async created() {
+    await this.fetchProjectByID(this.$route.params.id)
+    this.newData.idproject = this.$route.params.id
+    this.newData.data = { ...this.project }
+    console.log(this.newData.data)
+  },
+}
 </script>
 
 <style></style>

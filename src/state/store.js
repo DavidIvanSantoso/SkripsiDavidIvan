@@ -1,27 +1,43 @@
-import { createStore, createLogger } from 'vuex'
+import axios from 'axios';
+import { createStore } from 'vuex'
 
-import modules from './modules'
-
-const debug = process.env.NODE_ENV !== 'production'
-
-//export const baseServiceUrl = 'https://app-service-loyalty.onrender.com'
-// export const baseServiceUrl = process.env.VUE_APP_API_RENDER
-// export const baseServiceUrl = process.env.VUE_APP_API_AWS
  export const baseServiceUrl = "https://64591b604eb3f674df86dafb.mockapi.io/skripsi/"
 
-const store = createStore({
-  state () {
-    return {
-      baseServiceUrl
-    }
-  },
+ export const state={
+  projects:[],
+ }
 
-  modules,
+ export const getters = {
+    projects: state => state.projects,
+    
+};
+export const mutations = {
+    SET_PROJECTS(state, value) { state.projects = value },
+    
+};
+
+export const actions={
+  async fetchProjects({commit}){
+    const res = await axios.get(`${baseServiceUrl}/projects`)
+    if(res){
+      commit("SET_PROJECTS",res.data)
+    }
+     
+  }
+}
+const store = createStore({
+  // state () {
+  //   return {
+  //     baseServiceUrl,
+  //     projects,
+  //   }
+  // },
+ 
+  state,
   // Enable strict mode in development to get a warning
   // when mutating state outside of a mutation.
   // https://vuex.vuejs.org/guide/strict.html
-  strict: debug,
-  plugins: debug ? [createLogger()] : [],
+ 
 })
 
 export default store

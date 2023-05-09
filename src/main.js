@@ -19,6 +19,7 @@ import Select2 from 'vue3-select2-component';
 // import Multiselect from 'vue-multiselect'
 import VueMultiselect from 'vue-multiselect'
 
+
 // import the styles 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -45,6 +46,7 @@ app.use(GridLayout);
 app.use(Vue3ColorPicker);
 app.use(Select2);
 app.use(VueMultiselect);
+
 
 
 
