@@ -122,6 +122,7 @@ export default {
   data() {
     return {
       posts: [],
+      testGit: '',
       mockAPI: {
         children: [
           // {
