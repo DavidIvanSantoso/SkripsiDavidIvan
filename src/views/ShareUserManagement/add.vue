@@ -51,6 +51,7 @@
               <input
                 class="form-check-input"
                 type="radio"
+                style="width: 0.5rem !important; height: 0.5rem"
                 name="flexRadioDefault"
                 id="flexRadioDefault1"
                 :value="items.typeVal"

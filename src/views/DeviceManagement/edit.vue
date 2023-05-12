@@ -153,11 +153,16 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   methods: {
+    ...mapActions(['editDeviceByID']),
     changeTypeConfirm() {
       this.devicetype.typeconfirm = true
     },
+  },
+  computed: {
+    ...mapState(['device']),
   },
   data() {
     return {

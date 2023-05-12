@@ -12,23 +12,14 @@
     "
   >
     <CSidebarBrand>
-      <p style="text-align: left">Platform IoT</p>
-      <!-- <CIcon
-        custom-class-name="sidebar-brand-full"
-        :icon="logoNegative"
-        :height="35"
+      <img
+        src="@/assets/brand/logo.png"
+        class="fluid"
+        style="width: 3rem; height: 3rem"
       />
-      <CIcon
-        custom-class-name="sidebar-brand-narrow"
-        :icon="sygnet"
-        :height="35"
-      /> -->
+      <p style="text-align: left" class="mx-3 mt-3">Platform IoT</p>
     </CSidebarBrand>
     <AppSidebarNav />
-    <!-- <CSidebarToggler
-      class="d-none d-lg-flex"
-      @click="$store.commit('toggleUnfoldable')"
-    /> -->
   </CSidebar>
 </template>
 

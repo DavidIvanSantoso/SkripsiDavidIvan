@@ -44,7 +44,12 @@
             </div>
           </div>
           <div class="p-2 bd-highlight">
-            <button type="button " class="btn btn-danger mx-2">
+            <button
+              type="button "
+              class="btn btn-danger mx-2"
+              data-bs-toggle="modal"
+              data-bs-target="#alertModalDownload"
+            >
               Dowload Data
             </button>
           </div>
@@ -797,6 +802,64 @@
       </div>
     </div>
   </div>
+
+  <!-- modal Download -->
+  <div
+    id="alertModalDownload"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="alertModalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="mt-4">
+            <h4 class="mb-3 text-success text-center">Download Data</h4>
+            <!-- form input -->
+            <form>
+              <!-- Widget Title -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label"
+                  >Select Cloud Variables To Store in CSV</label
+                >
+                <VueMultiselect
+                  v-model="value"
+                  tag-placeholder="Add this as new tag"
+                  placeholder="Search or add a tag"
+                  label="name"
+                  track-by="code"
+                  :options="options"
+                  :multiple="true"
+                  :taggable="true"
+                  @tag="addTag"
+                ></VueMultiselect>
+              </div>
+            </form>
+            <div class="hstack gap-2 justify-content-center mt-2">
+              <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <!-- noted: cara nutup modalnya -->
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -842,16 +905,16 @@ export default {
         { name: 'Open Source', code: 'os' },
       ],
       layout: [
-        {
-          x: 0,
-          y: 0,
-          w: 3,
-          h: 4.5,
-          i: '0',
-          widgettype: 4,
-          widgetTitleName: 'Hoi',
-          modalTarget: '#alertModalLineChart',
-        },
+        // {
+        //   x: 0,
+        //   y: 0,
+        //   w: 3,
+        //   h: 4.5,
+        //   i: '0',
+        //   widgettype: 4,
+        //   widgetTitleName: 'Hoi',
+        //   modalTarget: '#alertModalLineChart',
+        // },
         // { x: 2, y: 0, w: 2, h: 4.5, i: '1', widgettype: 2 },
         // { x: 4, y: 0, w: 2, h: 4.5, i: '2', widgettype: 3 },
         // { x: 6, y: 0, w: 5.5, h: 11.5, i: '3', widgettype: 4 },
@@ -874,7 +937,7 @@ export default {
           widgetid: 1,
           widgetname: 'Value',
           widgettype: 1,
-          icon: 'bi bi-aspect-ratio-fill',
+          icon: 'bi bi-123',
           modalTarget: '#alertModalValue',
         },
         {
@@ -887,31 +950,31 @@ export default {
           widgetid: 3,
           widgetname: 'Switch',
           widgettype: 3,
-          icon: 'bi bi-bar-chart-line-fill',
+          icon: 'bi bi-toggles',
         },
         {
           widgetid: 4,
           widgetname: 'Line Chart',
           widgettype: 4,
-          icon: 'bi bi-pencil-fill',
+          icon: 'bi bi-graph-up',
         },
         {
           widgetid: 5,
           widgetname: 'Pie Chart',
           widgettype: 5,
-          icon: 'bi bi-pencil-fill',
+          icon: 'bi bi-pie-chart',
         },
         {
           widgetid: 6,
           widgetname: 'Vertical Bar Chart',
           widgettype: 6,
-          icon: 'bi bi-pencil-fill',
+          icon: 'bi bi-bar-chart',
         },
         {
           widgetid: 7,
           widgetname: 'LED',
           widgettype: 7,
-          icon: 'bi bi-pencil-fill',
+          icon: 'bi bi-lightbulb',
         },
         {
           widgetid: 8,

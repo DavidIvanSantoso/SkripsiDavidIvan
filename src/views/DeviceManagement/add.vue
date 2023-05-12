@@ -12,7 +12,11 @@
                   <h6 class="card-title mb-0 flex-grow-1">
                     Complete Device Information
                   </h6>
-                  <button class="btn btn-success" style="color: aliceblue">
+                  <button
+                    class="btn btn-success"
+                    style="color: aliceblue"
+                    @click="testConfirm(this.dataBaru)"
+                  >
                     Confirm
                   </button>
                 </div>
@@ -25,6 +29,7 @@
                             >WiFi SSID</label
                           >
                           <input
+                            v-model="dataBaru.ssid"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -38,6 +43,7 @@
                             >WiFi Password</label
                           >
                           <input
+                            v-model="dataBaru.wifipass"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -53,6 +59,7 @@
                             >Device Name</label
                           >
                           <input
+                            v-model="dataBaru.devname"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -66,6 +73,7 @@
                             >Generated Secret Key</label
                           >
                           <input
+                            v-model="dataBaru.secretkey"
                             disabled
                             type="text"
                             class="form-control"
@@ -153,14 +161,31 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   methods: {
+    ...mapActions(['fetchDeviceByID', 'addDevice']),
+    testConfirm(params) {
+      console.log('DATA SEND', params)
+    },
     changeTypeConfirm() {
       this.devicetype.typeconfirm = true
     },
   },
+  computed: {
+    ...mapState(['device']),
+  },
   data() {
     return {
+      dataBaru: {
+        ssid: '',
+        wifipass: '',
+        devname: '',
+        secretkey: '',
+        devtype: '',
+        devmodel: '',
+      },
+
       devicetype: {
         type32: '',
         type8266: '',

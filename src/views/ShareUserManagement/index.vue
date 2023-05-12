@@ -8,7 +8,7 @@
           class="btn btn-primary justify-content-end"
           to="/shareuser/add"
         >
-          <i class="ri-add-fill label-icon align-middle fs-16 me-2"></i>
+          <i class="bi bi-plus-lg"></i>
           Add Share User Access
         </router-link>
       </div>
@@ -44,17 +44,20 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <router-link :to="`/project/${props.row.projectId}`">
+                  <router-link :to="`/shareuser/${props.row.dashboardid}`">
                     <b-button
                       type="button"
-                      class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
+                      class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
                     >
-                      <i
-                        class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
-                      ></i>
-                      Detail
+                      <i class="bi bi-pencil-fill"></i>
                     </b-button>
                   </router-link>
+                  <b-button
+                    type="button"
+                    class="btn btn-danger mx-1 btn-sm btn-label waves-effect waves-light rounded-pill"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                  </b-button>
                   <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
                                         Detail

@@ -102,7 +102,7 @@
                       <div
                         class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                       >
-                        <router-link to="/dashboard">
+                        <router-link to="/project/index">
                           <button type="button" class="btn btn-primary btn-lg">
                             Login
                           </button>

@@ -1,11 +1,13 @@
 <template>
   <!-- graph component -->
-  <apexchart
-    width="400"
-    type="bar"
-    :options="options"
-    :series="series"
-  ></apexchart>
+  <div class="row" style="width: 100%">
+    <apexchart
+      width="450"
+      type="bar"
+      :options="options"
+      :series="series"
+    ></apexchart>
+  </div>
 </template>
 
 <script>

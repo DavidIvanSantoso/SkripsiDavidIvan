@@ -86,13 +86,15 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
-
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     VueGoodTable,
   },
+  computed: { ...mapActions(['deleteDashboardByID', 'fetchDashboard']) },
   data() {
     return {
+      ...mapState(['dashboard']),
       title: 'Manage Projects',
       data: true,
       dashboardIDNew: 0,
