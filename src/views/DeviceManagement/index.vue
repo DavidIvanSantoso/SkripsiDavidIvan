@@ -14,11 +14,11 @@
       </div>
       <!-- GoodTable -->
       <div class="p-3">
-        <template v-if="dummy?.rows">
+        <template v-if="devices">
           <div class="table-responsive table-card">
             <vue-good-table
               :columns="columns"
-              :rows="dummy.rows"
+              :rows="devices"
               :search-options="{
                 enabled: true,
                 trigger: 'enter',
@@ -44,7 +44,7 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <router-link :to="`/device/${props.row.deviceID}`">
+                  <router-link :to="`/device/${props.row.devid}`">
                     <b-button
                       type="button"
                       class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
@@ -123,19 +123,19 @@ export default {
       columns: [
         {
           label: 'Device ID',
-          field: 'deviceID',
+          field: 'devid',
         },
         {
           label: 'Device Name',
-          field: 'deviceName',
+          field: 'devname',
         },
         {
           label: 'Device Model',
-          field: 'deviceModelID',
+          field: 'devmodel',
         },
         {
           label: 'Last Access',
-          field: 'lastAccess',
+          field: 'lastaccess',
         },
         {
           label: 'Action',
@@ -144,7 +144,9 @@ export default {
       ],
     }
   },
-  created() {},
+  async created() {
+    await this.fetchDevices()
+  },
 }
 </script>
 

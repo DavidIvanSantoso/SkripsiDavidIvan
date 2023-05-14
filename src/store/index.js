@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
- export const baseServiceUrl = "https://64591b604eb3f674df86dafb.mockapi.io/skripsi/"
+ export const baseServiceUrl = "http://localhost:3500"
 
 export default createStore({
   state: {
@@ -15,8 +15,11 @@ export default createStore({
     dashboards:[],
     dashboard:[],
     widgets:[],
+    userAuth:[],
   },
   getters:{
+    //LOGIN REGISTER
+    user:state=>state.userAuth,
     //PROJECT MANAGEMENT
      projects: state => state.projects,
      project: state => state.project,
@@ -34,6 +37,8 @@ export default createStore({
      dashboard: state => state.dashboard,
   },
   mutations: {
+    //set USERAUTH
+    SET_USERAUTH(state,value){state.userAuth=value},
     //PROJECT MANAGEMENT
     SET_PROJECTS(state, value) { state.projects = value },
     SET_PROJECT(state, value) { state.project = value },
@@ -61,40 +66,59 @@ export default createStore({
     },
   },
   actions: {
+
+    //USER AUTH
+     async userLogin({commit},params){
+      const res = await axios.post(`${baseServiceUrl}/userauth`,params)
+      if(res){
+        console.log('RES STATS',res.status)
+        console.log('Response Callback',res)
+        commit("SET_USERAUTH",res.data)
+      }
+    },
+    //CREATE USER
+    async createUser(_,params){
+       await axios.post(`${baseServiceUrl}/user`,params).then((res)=>{
+        console.log("RES STATS",res.status)
+        console.log('Response Callback',res)
+      })
+    },
+    
     //PROJECT MANAGEMENT
     async fetchProjects({commit}){
-      const res = await axios.get(`${baseServiceUrl}/projects`)
+      const res = await axios.get(`${baseServiceUrl}/project`)
       if(res){
         
         commit("SET_PROJECTS",res.data)
       }
     },
     async fetchProjectByID({commit},params){
-      const res = await axios.get(`${baseServiceUrl}/projects/${params}`)
+      const res = await axios.get(`${baseServiceUrl}/project/${params}`)
       if(res){
         commit("SET_PROJECT",res.data)
       }
     },
     async addProject(_,params){
-       await axios.post(`${baseServiceUrl}/projects`,params).then((res)=>{
+       await axios.post(`${baseServiceUrl}/project`,params).then((res)=>{
         console.log('Response Callback',res)
       })
     },
     async updateProjectByID(_,params){
-      await axios.put(`${baseServiceUrl}/projects/${params.id}`,params.data).then((res)=>{
+      await axios.put(`${baseServiceUrl}/project`,params).then((res)=>{
+       
         console.log('Response Callback',res);
       })
     },
     async deleteProjectByID(_,params){
-      console.log("ROW COUNT",params);
-      await axios.delete(`${baseServiceUrl}/projects/${params}`).then((res)=>{
+      console.log("PRAMS",params)
+      await axios.delete(`${baseServiceUrl}/project`,params).then((res)=>{
         console.log("Response Callback",res);
       })
     },
 
     //DEVICE MANAGEMENT
     async fetchDevices({commit}){
-      const res = await axios.get(`${baseServiceUrl}/devices`)
+      const res = await axios.get(`${baseServiceUrl}/device`)
       if(res){
         
         commit("SET_DEVICES",res.data)
@@ -107,12 +131,13 @@ export default createStore({
       }
     },
     async addDevice(_,params){
+      console.log("DATA",params)
        await axios.post(`${baseServiceUrl}/device`,params).then((res)=>{
         console.log('Response Callback',res)
       })
     },
     async updateDeviceByID(_,params){
-      await axios.put(`${baseServiceUrl}/device/${params.id}`,params.data).then((res)=>{
+      await axios.put(`${baseServiceUrl}/device`,params).then((res)=>{
         console.log('Response Callback',res);
       })
     },
@@ -125,9 +150,8 @@ export default createStore({
 
     //CLOUD VAR MANAGEMENT
     async fetchCloudVarArr({commit}){
-      const res = await axios.get(`${baseServiceUrl}/variables`)
+      const res = await axios.get(`${baseServiceUrl}/devicevar`)
       if(res){
-        
         commit("SET_CLOUDVARARR",res.data)
       }
     },

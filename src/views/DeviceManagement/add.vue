@@ -15,7 +15,7 @@
                   <button
                     class="btn btn-success"
                     style="color: aliceblue"
-                    @click="testConfirm(this.dataBaru)"
+                    @click="addDevice(this.newData)"
                   >
                     Confirm
                   </button>
@@ -29,7 +29,7 @@
                             >WiFi SSID</label
                           >
                           <input
-                            v-model="dataBaru.ssid"
+                            v-model="newData.ssid"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -43,7 +43,7 @@
                             >WiFi Password</label
                           >
                           <input
-                            v-model="dataBaru.wifipass"
+                            v-model="newData.wifipass"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -59,7 +59,7 @@
                             >Device Name</label
                           >
                           <input
-                            v-model="dataBaru.devname"
+                            v-model="newData.devname"
                             type="text"
                             class="form-control"
                             id="exampleFormControlInput1"
@@ -73,7 +73,7 @@
                             >Generated Secret Key</label
                           >
                           <input
-                            v-model="dataBaru.secretkey"
+                            v-model="newData.secretkey"
                             disabled
                             type="text"
                             class="form-control"
@@ -81,6 +81,26 @@
                             placeholder="xxxxxxxxx"
                           />
                         </div>
+                      </div>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="exampleFormControlInput1">Device Type</label>
+                      <div
+                        class="form-check mt-3"
+                        v-for="items in devtype"
+                        :key="items"
+                      >
+                        <input
+                          v-model="newData.devtype"
+                          class="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          :id="items"
+                          :value="items"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          {{ items }}
+                        </label>
                       </div>
                     </div>
                   </form>
@@ -91,70 +111,73 @@
         </section>
 
         <!-- Choose Device Type -->
-        <div class="card my-3">
-          <div class="card-header align-items-center d-flex">
-            <h6 class="card-title mb-0 flex-grow-1">
-              Choose Your Microcontroller Type
-            </h6>
-            <!-- <button
-              class="btn btn-success"
-              style="color: aliceblue"
-              @click="changeTypeConfirm"
-            >
-              Confirm
-            </button> -->
-          </div>
-          <div class="card-body">
-            <div class="card-group">
-              <div class="card align-items-center">
-                <img
-                  src="@/assets/images/microcontroller/ESP32.png"
-                  class="card-img-top"
-                  style="width: 26rem"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Choose Your Device ESP32 Type!</h5>
-                  <select
-                    v-model="type32"
-                    class="form-select my-3"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      v-for="item in esp32type"
-                      :key="item.id"
-                      :value="item.id"
-                    >
-                      {{ item.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="card align-items-center">
-                <img
-                  src="@/assets/images/microcontroller/ESP8266.png"
-                  class="card-img-top"
-                  style="width: 26rem"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">Choose Your Device ESP8266 Type!</h5>
-                  <select
-                    v-model="type"
-                    class="form-select my-3"
-                    aria-label="Default select example"
-                  >
-                    <option
-                      v-for="item in esp8266type"
-                      :key="item.id"
-                      :value="item.id"
-                    >
-                      {{ item.name }}
-                    </option>
-                  </select>
-                </div>
+        <section v-if="newData.devtype !== null">
+          <div class="card my-3">
+            <div class="card-header align-items-center d-flex">
+              <h6 class="card-title mb-0 flex-grow-1">
+                Choose Your Microcontroller Type
+              </h6>
+            </div>
+            <div class="card-body">
+              <div class="card-group">
+                <!-- ESP32 -->
+                <section v-if="newData.devtype === 'ESP32'">
+                  <div class="card align-items-center" style="width: 100%">
+                    <img
+                      src="@/assets/images/microcontroller/ESP32.png"
+                      class="card-img-top"
+                      style="width: 26rem"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Choose Your Device ESP32 Type!</h5>
+                      <select
+                        v-model="newData.devmodel"
+                        class="form-select my-3"
+                        aria-label="Default select example"
+                      >
+                        <option
+                          v-for="item in esp32type"
+                          :key="item.id"
+                          :value="item.name"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </section>
+                <!-- ESP8266 -->
+                <section v-else-if="newData.devtype === 'ESP8266'">
+                  <div class="card align-items-center">
+                    <img
+                      src="@/assets/images/microcontroller/ESP8266.png"
+                      class="card-img-top"
+                      style="width: 26rem"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        Choose Your Device ESP8266 Type!
+                      </h5>
+                      <select
+                        v-model="newData.devmodel"
+                        class="form-select my-3"
+                        aria-label="Default select example"
+                      >
+                        <option
+                          v-for="item in esp8266type"
+                          :key="item.id"
+                          :value="item.name"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </section>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
@@ -177,20 +200,18 @@ export default {
   },
   data() {
     return {
-      dataBaru: {
+      typeChosen: null,
+      modelChosen: null,
+      newData: {
         ssid: '',
         wifipass: '',
         devname: '',
-        secretkey: '',
-        devtype: '',
-        devmodel: '',
+        password: 'EMPTY',
+        devtype: null,
+        devmodel: null,
       },
 
-      devicetype: {
-        type32: '',
-        type8266: '',
-        typeconfirm: false,
-      },
+      devtype: ['ESP32', 'ESP8266'],
       esp32type: [
         { name: 'Seed Wio Link', id: 1 },
         { name: 'WifInfo', id: 2 },

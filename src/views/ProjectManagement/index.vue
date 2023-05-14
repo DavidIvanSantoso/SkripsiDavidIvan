@@ -54,7 +54,11 @@
                   </router-link>
                   <b-button
                     type="button"
-                    @click="this.deleteProjectByID(props.row.projectid)"
+                    @click="
+                      this.deleteProjectByID({
+                        projectid: String(props.row.projectid),
+                      })
+                    "
                     class="btn btn-danger btn-sm btn-label waves-effect waves-light rounded-pill mx-1"
                   >
                     <i class="bi bi-trash-fill"></i>
@@ -100,7 +104,6 @@
       </div>
     </div>
   </div>
-  <div v-for="items in mockAPI.data" :key="items">{{ items.userid }}</div>
 </template>
 
 <script>
@@ -117,11 +120,19 @@ export default {
   mounted() {},
   methods: {
     ...mapActions(['fetchProjects', 'deleteProjectByID']),
+    deleteProjectJSON(params) {
+      this.deleteIndex.projectid = String(params)
+      console.log('TESTING PARAMS', this.deleteIndex)
+      this.deleteProjectByID(this.deleteIndex)
+    },
   },
 
   data() {
     return {
       posts: [],
+      deleteIndex: {
+        projectid: '',
+      },
       testGit: '',
       mockAPI: {
         children: [
@@ -171,7 +182,7 @@ export default {
         },
         {
           label: 'Last Access',
-          field: 'lastAccess',
+          field: 'lastaccess',
         },
         {
           label: 'Action',

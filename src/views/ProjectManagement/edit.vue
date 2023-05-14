@@ -13,7 +13,7 @@
               <div class="form-group">
                 <label for="exampleFormControlInput1">Project Name</label>
                 <input
-                  v-model="this.project.projectname"
+                  v-model="this.newData.projectname"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -25,7 +25,7 @@
                   >Project Description</label
                 >
                 <input
-                  v-model="this.project.projectdesc"
+                  v-model="this.newData.projectdesc"
                   type="text"
                   class="form-control"
                   id="exampleFormControlInput1"
@@ -36,12 +36,7 @@
             <div class="button mt-4">
               <button
                 class="btn btn-success"
-                @click="
-                  this.updateProjectByID({
-                    id: this.newData.idproject,
-                    data: this.newData.data,
-                  })
-                "
+                @click="this.updateProjectByID(this.newData)"
               >
                 Submit
               </button>
@@ -64,17 +59,13 @@ export default {
   },
   data() {
     return {
-      newData: {
-        idproject: null,
-        data: [],
-      },
+      newData: {},
     }
   },
   async created() {
     await this.fetchProjectByID(this.$route.params.id)
-    this.newData.idproject = this.$route.params.id
-    this.newData.data = { ...this.project }
-    console.log(this.newData.data)
+
+    this.newData = { ...this.project[0] }
   },
 }
 </script>

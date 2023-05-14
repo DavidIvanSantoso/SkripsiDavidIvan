@@ -11,6 +11,16 @@
             </p> -->
             <form>
               <div class="form-group">
+                <label for="exampleFormControlInput1">Project ID</label>
+                <input
+                  v-model="newData.projectid"
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="Please enter your project name!"
+                />
+              </div>
+              <div class="form-group mt-3">
                 <label for="exampleFormControlInput1">Project Name</label>
                 <input
                   v-model="newData.projectname"
@@ -58,10 +68,10 @@ export default {
   data() {
     return {
       newData: {
-        userid: 1,
+        userid: 'DAVID1',
         projectname: '',
         projectdesc: '',
-        projectid: '100',
+        projectid: '',
       },
     }
   },

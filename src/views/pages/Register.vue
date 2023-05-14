@@ -17,9 +17,10 @@
                       <!-- Username -->
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example1c"
-                          >Username</label
+                          >User ID</label
                         >
                         <input
+                          v-model="form.userid"
                           type="text"
                           id="form3Example1c"
                           class="form-control"
@@ -33,10 +34,11 @@
 
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example3c"
-                          >Your Email</label
+                          >Username</label
                         >
                         <input
-                          type="email"
+                          v-model="form.username"
+                          type="text"
                           id="form3Example3c"
                           class="form-control"
                         />
@@ -51,6 +53,7 @@
                           >Password</label
                         >
                         <input
+                          v-model="form.hashkey"
                           type="password"
                           id="form3Example4c"
                           class="form-control"
@@ -76,11 +79,15 @@
                     <div
                       class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                     >
-                      <router-link to="/pages/login">
-                        <button type="button" class="btn btn-primary btn-lg">
-                          Register
-                        </button>
-                      </router-link>
+                      <!-- <router-link to="/pages/login"> -->
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-lg"
+                        @click="createUser(this.form)"
+                      >
+                        Register
+                      </button>
+                      <!-- </router-link> -->
                     </div>
                   </form>
                 </div>
@@ -103,7 +110,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Register',
+  data() {
+    return {
+      form: {
+        userid: '',
+        username: '',
+        password: '',
+        email: '',
+        role: 'A',
+      },
+    }
+  },
+  methods: {
+    ...mapActions(['createUser']),
+  },
 }
 </script>

@@ -21,36 +21,40 @@
                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                       Login
                     </p>
-                    <!-- Username -->
+
                     <form class="mx-1 mx-md-4">
+                      <!-- USERID -->
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+
                         <div class="form-outline flex-fill mb-0">
                           <label class="form-label" for="form3Example1c"
-                            >Username</label
+                            >User ID</label
                           >
                           <input
+                            v-model="form.user"
                             type="text"
                             id="form3Example1c"
                             class="form-control"
                           />
                         </div>
                       </div>
-                      <!-- Email -->
-                      <div class="d-flex flex-row align-items-center mb-4">
+                      <!-- FULL NAME -->
+                      <!-- <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
 
                         <div class="form-outline flex-fill mb-0">
                           <label class="form-label" for="form3Example3c"
-                            >Email</label
+                            >Full Name</label
                           >
                           <input
+                            v-model="form.username"
                             type="email"
                             id="form3Example3c"
                             class="form-control"
                           />
                         </div>
-                      </div>
+                      </div> -->
                       <!-- Password -->
                       <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
@@ -59,6 +63,7 @@
                             >Password</label
                           >
                           <input
+                            v-model="form.pwd"
                             type="password"
                             id="form3Example4c"
                             class="form-control"
@@ -66,7 +71,7 @@
                         </div>
                       </div>
                       <!-- Role -->
-                      <div class="row px-4">Role</div>
+                      <!-- <div class="row px-4">Role</div>
                       <div class="d-flex flex-row align-items-center mb-4">
                         <div class="form-check mt-3 mx-3">
                           <input
@@ -97,16 +102,20 @@
                             User
                           </label>
                         </div>
-                      </div>
+                      </div> -->
                       <!-- Button -->
                       <div
                         class="d-flex justify-content-center mx-4 mb-3 mb-lg-4"
                       >
-                        <router-link to="/project/index">
-                          <button type="button" class="btn btn-primary btn-lg">
-                            Login
-                          </button>
-                        </router-link>
+                        <!-- <router-link to="/project/index"> -->
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-lg"
+                          @click="userLogin(this.form)"
+                        >
+                          Login
+                        </button>
+                        <!-- </router-link> -->
                       </div>
                       <div class="row">
                         <p>
@@ -127,8 +136,23 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Login',
+  data() {
+    return {
+      form: {
+        user: '',
+        pwd: '',
+      },
+    }
+  },
+  methods: {
+    ...mapActions(['userLogin']),
+  },
+  computed: {
+    ...mapState(['userAuth']),
+  },
 }
 </script>
 

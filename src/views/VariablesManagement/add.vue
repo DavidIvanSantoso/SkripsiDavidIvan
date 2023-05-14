@@ -16,11 +16,11 @@
         </div>
         <div class="card-body h-100">
           <div class="p-3">
-            <template v-if="dummy?.rows">
+            <template v-if="cloudvararr">
               <div class="table-responsive table-card">
                 <vue-good-table
                   :columns="columns"
-                  :rows="dummy.rows"
+                  :rows="cloudvararr"
                   :search-options="{
                     enabled: true,
                     trigger: 'enter',
@@ -96,23 +96,28 @@
               <label for="disabledSelect" class="form-label"
                 >Choose Your Device</label
               >
-              <select id="disabledSelect" class="form-select">
+              {{ choosenDevice }}
+              <select
+                id="disabledSelect"
+                class="form-select"
+                v-model="choosenDevice"
+              >
                 <option
-                  v-for="item in deviceoption"
-                  :key="item.id"
-                  :value="item.devicename"
+                  v-for="item in newDataDevice"
+                  :key="item.devid"
+                  :value="item.devid"
                 >
-                  {{ item.devicename }}
+                  {{ item.devname }}
                 </option>
               </select>
             </div>
             <div class="mb-3">
               <label for="disabledTextInput" class="form-label"
-                >Device Type</label
+                >Device ID</label
               >
               <input
                 disabled
-                v-model="deviceoption[0].devicetype"
+                v-model="choosenDevice"
                 type="text"
                 id="disabledTextInput"
                 class="form-control"
@@ -436,16 +441,21 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
-
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     VueGoodTable,
+  },
+  computed: { ...mapState(['devices', 'cloudvararr']) },
+  methods: {
+    ...mapActions(['fetchDevices', 'fetchCloudVarArr']),
   },
   data() {
     return {
       title: 'Manage Projects',
       data: true,
       formula: '',
+      choosenDevice: '',
       dataTimeUpdateOption: [
         { value: 'o', label: 'On Change' },
         { value: 'p', label: 'Periodically' },
@@ -455,52 +465,11 @@ export default {
         { devicetype: 'ESP8266', devicename: 'device1', id: '1' },
         { devicetype: 'ESP32', devicename: 'device2', id: '2' },
       ],
-      dummy: {
-        rows: [
-          {
-            varid: 1,
-            varname: 'Device 1',
 
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 2,
-            varname: 'Project1',
+      //GET DATA API
+      newDataDevice: [],
+      newCloudVar: [],
 
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-        ],
-      },
       columns: [
         {
           label: 'Variables ID',
@@ -521,6 +490,14 @@ export default {
         },
       ],
     }
+  },
+  async created() {
+    await this.fetchDevices()
+    await this.fetchCloudVarArr()
+    this.newDataDevice = { ...this.devices }
+    this.newCloudVar = { ...this.cloudvararr }
+    console.log('DEVICE OIPTION', this.newDataDevice)
+    console.log('CLOUD VAR', this.newCloudVar)
   },
 }
 </script>
