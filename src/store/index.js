@@ -202,6 +202,7 @@ export default createStore({
       }
     },
     async addDashboard(_,params){
+      console.log("PARAMS",this.params)
        await axios.post(`${baseServiceUrl}/dashboard`,params).then((res)=>{
         console.log('Response Callback',res)
       })

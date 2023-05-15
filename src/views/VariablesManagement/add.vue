@@ -1,7 +1,7 @@
 <template>
   <div class="row" style="width: 100% !important">
     <!-- card cloud var -->
-    <div class="col md-8">
+    <div class="col-8 md-8">
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h6 class="card-title mb-0 flex-grow-1">Cloud Variables</h6>
@@ -16,11 +16,11 @@
         </div>
         <div class="card-body h-100">
           <div class="p-3">
-            <template v-if="cloudvararr">
+            <template v-if="newCloudVarTable">
               <div class="table-responsive table-card">
                 <vue-good-table
                   :columns="columns"
-                  :rows="cloudvararr"
+                  :rows="newCloudVarTable"
                   :search-options="{
                     enabled: true,
                     trigger: 'enter',
@@ -86,9 +86,6 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <h6 class="card-title mb-0 flex-grow-1">Device Information</h6>
-          <button class="btn btn-success" style="color: aliceblue">
-            Confirm Device Information
-          </button>
         </div>
         <div class="card-body">
           <form>
@@ -96,11 +93,11 @@
               <label for="disabledSelect" class="form-label"
                 >Choose Your Device</label
               >
-              {{ choosenDevice }}
+
               <select
                 id="disabledSelect"
                 class="form-select"
-                v-model="choosenDevice"
+                v-model="form.devid"
               >
                 <option
                   v-for="item in newDataDevice"
@@ -117,7 +114,7 @@
               >
               <input
                 disabled
-                v-model="choosenDevice"
+                v-model="form.devid"
                 type="text"
                 id="disabledTextInput"
                 class="form-control"
@@ -129,6 +126,7 @@
       </div>
     </div>
   </div>
+  <!-- add modal -->
   <!--modal content-->
   <div
     id="alertModal"
@@ -143,22 +141,23 @@
         <div class="modal-body">
           <div class="mt-4">
             <h4 class="mb-3 text-success text-center">
-              Enter Cloud Variables Information
+              Add Cloud Variables Information
             </h4>
             <!-- form input -->
             <form>
-              <div class="mt-2 mx-2">
+              <!-- <div class="mt-2 mx-2">
                 <label for="varID" class="form-label">Var ID</label>
-                <input
+                <input v-model="form.varid"
                   type="text"
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                 />
-              </div>
+              </div> -->
               <div class="mb-2 mx-2">
                 <label for="varName" class="form-label">Variable Name</label>
                 <input
+                  v-model="this.form.varname"
                   type="text"
                   class="form-control"
                   id="exampleInputPassword1"
@@ -170,18 +169,26 @@
                 <select
                   id="disabledSelect"
                   class="form-select"
-                  v-model="formula"
+                  v-model="this.form.vartype"
                 >
-                  <option v-for="item in datatypeOption" :key="item">
-                    {{ item }}
+                  <option
+                    v-for="item in datatypeOption"
+                    :key="item.optionKey"
+                    :value="item.optionKey"
+                  >
+                    {{ item.name }}
                   </option>
                 </select>
               </div>
 
               <!-- formula input -->
-              <div class="mb-2 mx-2" v-if="this.formula === 'formula'">
+              <div class="mb-2 mx-2" v-if="this.form.vartype === 'f'">
                 <label for="varFormula" class="form-label">Enter Formula</label>
-                <input type="text" class="form-control" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.varformula"
+                />
                 <div id="passwordHelpBlock" class="form-text text-success">
                   *Basic formula can provide calculation from platform with
                   basic math operation such as +,-,/,x.*
@@ -195,69 +202,60 @@
                     >Variable Role Access</label
                   >
                 </div>
-                <div class="form-check form-check-inline">
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in roleAccess"
+                  :key="items"
+                >
                   <input
+                    v-model="form.varaccess"
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="inlineRadio1"
-                    value="w"
+                    :value="items.type"
                   />
-                  <label class="form-check-label mx-2" for="inlineRadio1"
-                    >Write</label
-                  >
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio2"
-                    value="r"
-                  />
-                  <label class="form-check-label mx-2" for="inlineRadio2"
-                    >Read</label
-                  >
+                  <label class="form-check-label mx-2" for="inlineRadio1">{{
+                    items.name
+                  }}</label>
                 </div>
               </div>
 
               <!-- var timestamp -->
-              <div class="mb-2 mx-2">
+              <div class="mb-2 mx-2 mt-3">
                 <div class="row">
                   <label for="varTimeStamp" class="form-label"
                     >Variable Time Update</label
                   >
                 </div>
-
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label mx-2" for="inlineRadio3"
-                  >Periodically</label
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in PeriodTime"
+                  :key="items.optionKey"
                 >
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label" for="inlineRadio3"
-                  >On Update</label
-                >
-                <div class="mt-2">
-                  <label for="varID" class="form-label">Time Update (ms)</label>
                   <input
+                    :value="items.optionKey"
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions2"
+                    id="inlineRadio3"
+                    v-model="form.schedid"
+                  />
+                  <label class="form-check-label mx-2" for="inlineRadio3">{{
+                    items.name
+                  }}</label>
+                </div>
+                {{ form.schedid }}
+                <!-- period time ms -->
+                <!-- <div class="mt-2">
+                  <label for="varID" class="form-label">Time Update (ms)</label>
+                  <input 
                     type="text"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                   />
-                </div>
+                </div> -->
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -274,6 +272,7 @@
                 type="button"
                 class="btn btn-success"
                 data-bs-dismiss="modal"
+                @click="addCloudVar(this.form)"
               >
                 Submit
               </button>
@@ -283,6 +282,7 @@
       </div>
     </div>
   </div>
+
   <!-- Edit Variables modal -->
   <div
     id="alertModalEdit"
@@ -448,7 +448,7 @@ export default {
   },
   computed: { ...mapState(['devices', 'cloudvararr']) },
   methods: {
-    ...mapActions(['fetchDevices', 'fetchCloudVarArr']),
+    ...mapActions(['fetchDevices', 'fetchCloudVarArr', 'addCloudVar']),
   },
   data() {
     return {
@@ -460,12 +460,59 @@ export default {
         { value: 'o', label: 'On Change' },
         { value: 'p', label: 'Periodically' },
       ],
-      datatypeOption: ['integer', 'float/double', 'boolean', 'formula'],
+
       deviceoption: [
         { devicetype: 'ESP8266', devicename: 'device1', id: '1' },
         { devicetype: 'ESP32', devicename: 'device2', id: '2' },
       ],
-
+      newCloudVarTable: [],
+      form: {
+        varname: '',
+        devid: '',
+        vartype: '',
+        varaccess: '',
+        schedid: '',
+        varformula: '',
+      },
+      //setup radio
+      roleAccess: [
+        {
+          name: 'Read Only',
+          type: 'r',
+        },
+        {
+          name: 'Write & Read',
+          type: 'a',
+        },
+      ],
+      PeriodTime: [
+        {
+          name: 'Periodically',
+          optionKey: 'p',
+        },
+        {
+          name: 'On Change',
+          optionKey: 'o',
+        },
+      ],
+      datatypeOption: [
+        {
+          name: 'Integer',
+          optionKey: 'i',
+        },
+        {
+          name: 'String',
+          optionKey: 's',
+        },
+        {
+          name: 'Float/Double',
+          optionKey: 'd',
+        },
+        {
+          name: 'Formula',
+          optionKey: 'f',
+        },
+      ],
       //GET DATA API
       newDataDevice: [],
       newCloudVar: [],

@@ -89,26 +89,21 @@
                             <template v-slot:table-row="props">
                               <span v-if="props.column.field === 'action'">
                                 <b-button
-                                @click="this.getDetailCloudVar(props.row.varid)"
+                                  @click="
+                                    this.getDetailCloudVar(props.row.varid)
+                                  "
                                   data-bs-toggle="modal"
                                   data-bs-target="#alertModalEdit"
                                   type="button"
                                   class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
                                 >
-                                  <i
-                                    class="bi bi-pencil-fill"
-                                  ></i>
-                                  
+                                  <i class="bi bi-pencil-fill"></i>
                                 </b-button>
                                 <b-button
-                                 
                                   type="button"
                                   class="btn btn-danger mx-1 btn-sm btn-label waves-effect waves-light rounded-pill"
                                 >
-                                  <i
-                                    class="bi bi-trash-fill"
-                                  ></i>
-                                  
+                                  <i class="bi bi-trash-fill"></i>
                                 </b-button>
                                 <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
@@ -141,44 +136,43 @@
                     <h6 class="card-title mb-0 flex-grow-1">
                       Device Information
                     </h6>
-                    
                   </div>
                   <div class="card-body">
-          <form>
-            <div class="mb-3">
-              <label for="disabledSelect" class="form-label"
-                >Choose Your Device</label
-              >
-              
-              <select
-                id="disabledSelect"
-                class="form-select"
-                v-model="form.devid"
-              >
-                <option
-                  v-for="item in newDevicesData"
-                  :key="item.devid"
-                  :value="item.devid"
-                  disabled
-                >
-                  {{ item.devname }}
-                </option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="disabledTextInput" class="form-label"
-                >Device ID</label
-              >
-              <input
-                disabled
-                v-model="form.devid"
-                type="text"
-                id="disabledTextInput"
-                class="form-control"
-                placeholder="Disabled input"
-              />
-            </div>
-          </form>
+                    <form>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label"
+                          >Choose Your Device</label
+                        >
+
+                        <select
+                          id="disabledSelect"
+                          class="form-select"
+                          v-model="form.devid"
+                        >
+                          <option
+                            v-for="item in newDevicesData"
+                            :key="item.devid"
+                            :value="item.devid"
+                            disabled
+                          >
+                            {{ item.devname }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label"
+                          >Device ID</label
+                        >
+                        <input
+                          disabled
+                          v-model="form.devid"
+                          type="text"
+                          id="disabledTextInput"
+                          class="form-control"
+                          placeholder="Disabled input"
+                        />
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -249,8 +243,9 @@
               </div> -->
               <div class="mb-2 mx-2">
                 <label for="varName" class="form-label">Variable Name</label>
-                <input v-model="this.form.varname"
-                  type="text" 
+                <input
+                  v-model="this.form.varname"
+                  type="text"
                   class="form-control"
                   id="exampleInputPassword1"
                 />
@@ -263,18 +258,24 @@
                   class="form-select"
                   v-model="this.form.vartype"
                 >
-                  <option v-for="item in datatypeOption" :key="item.optionKey" :value="item.optionKey">
+                  <option
+                    v-for="item in datatypeOption"
+                    :key="item.optionKey"
+                    :value="item.optionKey"
+                  >
                     {{ item.name }}
                   </option>
-                  
                 </select>
               </div>
-              
 
               <!-- formula input -->
               <div class="mb-2 mx-2" v-if="this.form.vartype === 'f'">
                 <label for="varFormula" class="form-label">Enter Formula</label>
-                <input type="text" class="form-control" v-model="form.varformula">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.varformula"
+                />
                 <div id="passwordHelpBlock" class="form-text text-success">
                   *Basic formula can provide calculation from platform with
                   basic math operation such as +,-,/,x.*
@@ -288,18 +289,22 @@
                     >Variable Role Access</label
                   >
                 </div>
-                <div class="form-check form-check-inline" v-for="items in roleAccess" :key="items">
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in roleAccess"
+                  :key="items"
+                >
                   <input
-                  v-model="form.varaccess"
+                    v-model="form.varaccess"
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="inlineRadio1"
                     :value="items.type"
                   />
-                  <label class="form-check-label mx-2" for="inlineRadio1"
-                    >{{ items.name }}</label
-                  >
+                  <label class="form-check-label mx-2" for="inlineRadio1">{{
+                    items.name
+                  }}</label>
                 </div>
               </div>
 
@@ -310,7 +315,11 @@
                     >Variable Time Update</label
                   >
                 </div>
-                <div class="form-check form-check-inline" v-for="items in PeriodTime" :key="items.optionKey">
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in PeriodTime"
+                  :key="items.optionKey"
+                >
                   <input
                     :value="items.optionKey"
                     class="form-check-input"
@@ -318,12 +327,11 @@
                     name="inlineRadioOptions2"
                     id="inlineRadio3"
                     v-model="form.schedid"
-                    
                   />
-                <label class="form-check-label mx-2" for="inlineRadio3"
-                  >{{items.name}}</label
-                >
-              </div>
+                  <label class="form-check-label mx-2" for="inlineRadio3">{{
+                    items.name
+                  }}</label>
+                </div>
                 {{ form.schedid }}
                 <!-- period time ms -->
                 <!-- <div class="mt-2">
@@ -391,8 +399,9 @@
               </div> -->
               <div class="mb-2 mx-2">
                 <label for="varName" class="form-label">Variable Name</label>
-                <input v-model="this.formEdit.varname"
-                  type="text" 
+                <input
+                  v-model="this.formEdit.varname"
+                  type="text"
                   class="form-control"
                   id="exampleInputPassword1"
                 />
@@ -405,18 +414,24 @@
                   class="form-select"
                   v-model="this.formEdit.vartype"
                 >
-                  <option v-for="item in datatypeOption" :key="item.optionKey" :value="item.optionKey">
+                  <option
+                    v-for="item in datatypeOption"
+                    :key="item.optionKey"
+                    :value="item.optionKey"
+                  >
                     {{ item.name }}
                   </option>
-                  
                 </select>
               </div>
-              
 
               <!-- formula input -->
               <div class="mb-2 mx-2" v-if="this.formEdit.vartype === 'f'">
                 <label for="varFormula" class="form-label">Enter Formula</label>
-                <input type="text" class="form-control" v-model="formEdit.varformula">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formEdit.varformula"
+                />
                 <div id="passwordHelpBlock" class="form-text text-success">
                   *Basic formula can provide calculation from platform with
                   basic math operation such as +,-,/,x.*
@@ -430,18 +445,22 @@
                     >Variable Role Access</label
                   >
                 </div>
-                <div class="form-check form-check-inline" v-for="items in roleAccess" :key="items">
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in roleAccess"
+                  :key="items"
+                >
                   <input
-                  v-model="formEdit.varaccess"
+                    v-model="formEdit.varaccess"
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="inlineRadio1"
                     :value="items.type"
                   />
-                  <label class="form-check-label mx-2" for="inlineRadio1"
-                    >{{ items.name }}</label
-                  >
+                  <label class="form-check-label mx-2" for="inlineRadio1">{{
+                    items.name
+                  }}</label>
                 </div>
               </div>
 
@@ -452,7 +471,11 @@
                     >Variable Time Update</label
                   >
                 </div>
-                <div class="form-check form-check-inline" v-for="items in PeriodTime" :key="items.optionKey">
+                <div
+                  class="form-check form-check-inline"
+                  v-for="items in PeriodTime"
+                  :key="items.optionKey"
+                >
                   <input
                     :value="items.optionKey"
                     class="form-check-input"
@@ -460,13 +483,12 @@
                     name="inlineRadioOptions2"
                     id="inlineRadio3"
                     v-model="formEdit.schedid"
-                    
                   />
-                <label class="form-check-label mx-2" for="inlineRadio3"
-                  >{{items.name}}</label
-                >
-              </div>
-                
+                  <label class="form-check-label mx-2" for="inlineRadio3">{{
+                    items.name
+                  }}</label>
+                </div>
+
                 <!-- period time ms -->
                 <!-- <div class="mt-2">
                   <label for="varID" class="form-label">Time Update (ms)</label>
@@ -507,88 +529,101 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 export default {
   components: {
     VueGoodTable,
   },
-  methods:{
-    ...mapActions(['fetchCloudVarArr','fetchDevices','addCloudVar','fetchCloudVarByIDDev','fetchCloudVarByID','updateCloudVarByID']),
-   async getDetailCloudVar(params){
-     this.formEdit.varid=params
-      var newParams={
-        'varid':params,
-        'devid':this.$route.params.id
-      };
-      console.log("PARAMS",newParams)
-     await this.fetchCloudVarByID(newParams)
+  methods: {
+    ...mapActions([
+      'fetchCloudVarArr',
+      'fetchDevices',
+      'addCloudVar',
+      'fetchCloudVarByIDDev',
+      'fetchCloudVarByID',
+      'updateCloudVarByID',
+    ]),
+    async getDetailCloudVar(params) {
+      this.formEdit.varid = params
+      var newParams = {
+        varid: params,
+        devid: this.$route.params.id,
+      }
+      console.log('PARAMS', newParams)
+      await this.fetchCloudVarByID(newParams)
       console.log(this.cloudvar)
-      this.formEdit={...this.cloudvar[0]}
-      console.log("FROM FILL",this.formEdit)
-    }
+      this.formEdit = { ...this.cloudvar[0] }
+      console.log('FROM FILL', this.formEdit)
+    },
   },
-  computed:{
-    ...mapState(['cloudvararr','devices','cloudvar'])
+  computed: {
+    ...mapState(['cloudvararr', 'devices', 'cloudvar']),
   },
   data() {
     return {
       title: 'Manage Projects',
       data: true,
-      choosenDevice:"",
-      datatypeOption:[{
-        name:"Integer",
-        optionKey:"i"
-      },
-    {
-      name:"String",
-      optionKey:'s',
-    },
-  {
-    name:"Float/Double",
-    optionKey:'d'
-  },
-{
-  name:"Formula",
-  optionKey:'f',
-      }],
-      PeriodTime:[{
-        name:"Periodically",
-        optionKey:"p"
-      }
-    ,{
-      name:"On Change",
-      optionKey:"o"
-    }],
+      choosenDevice: '',
+      datatypeOption: [
+        {
+          name: 'Integer',
+          optionKey: 'i',
+        },
+        {
+          name: 'String',
+          optionKey: 's',
+        },
+        {
+          name: 'Float/Double',
+          optionKey: 'd',
+        },
+        {
+          name: 'Formula',
+          optionKey: 'f',
+        },
+      ],
+      PeriodTime: [
+        {
+          name: 'Periodically',
+          optionKey: 'p',
+        },
+        {
+          name: 'On Change',
+          optionKey: 'o',
+        },
+      ],
 
-      newDevicesData:{},
+      newDevicesData: {},
       /////kirm data
-      form:{
-        varaccess:null,
-        devid:this.$route.params.id,
-        varformula:null,
-        varname:null,
-        schedid:null,
-        vartype:null,
+      form: {
+        varaccess: null,
+        devid: this.$route.params.id,
+        varformula: null,
+        varname: null,
+        schedid: null,
+        vartype: null,
       },
-      formEdit:{
-        varid:'',
-        varaccess:null,
-        varformula:null,
-        varname:null,
-        schedid:null,
-        vartype:null,
+      formEdit: {
+        varid: '',
+        varaccess: null,
+        varformula: null,
+        varname: null,
+        schedid: null,
+        vartype: null,
       },
-      getRouteParams:{
-        devid:this.$route.params.id
+      getRouteParams: {
+        devid: this.$route.params.id,
       },
-      roleAccess:[{
-        name:"Read Only",
-        type:"r"
-      },
-    {
-      name:"Write & Read",
-      type:"a"
-    }],
+      roleAccess: [
+        {
+          name: 'Read Only',
+          type: 'r',
+        },
+        {
+          name: 'Write & Read',
+          type: 'a',
+        },
+      ],
       deviceoption: [
         { devicetype: 'ESP8266', devicename: 'device1', id: '1' },
         { devicetype: 'ESP32', devicename: 'device2', id: '2' },
@@ -614,15 +649,14 @@ export default {
       ],
     }
   },
-   async created(){
-    await this.fetchCloudVarByIDDev(this.form.devid);
-    await this.fetchDevices();
-    this.newDevicesData={...this.devices}
-    this.newCloudArr={...this.cloudvararr}
-    console.log("New Cloud ARR", this.newCloudArr)
-    console.log("DEVICES",this.newDevicesData)
-
-  }
+  async created() {
+    await this.fetchCloudVarByIDDev(this.form.devid)
+    await this.fetchDevices()
+    this.newDevicesData = { ...this.devices }
+    this.newCloudArr = { ...this.cloudvararr }
+    console.log('New Cloud ARR', this.newCloudArr)
+    console.log('DEVICES', this.newDevicesData)
+  },
 }
 </script>
 

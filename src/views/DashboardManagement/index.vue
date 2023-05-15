@@ -20,11 +20,11 @@
       </div>
       <!-- GoodTable -->
       <div class="p-3">
-        <template v-if="dummy?.rows">
+        <template v-if="dashboards">
           <div class="table-responsive table-card">
             <vue-good-table
               :columns="columns"
-              :rows="dummy.rows"
+              :rows="dashboards"
               :search-options="{
                 enabled: true,
                 trigger: 'enter',
@@ -50,7 +50,7 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <router-link :to="`/dashboard/${props.row.dashboardID}`">
+                  <router-link :to="`/dashboard/${props.row.dashboardid}`">
                     <b-button
                       :to="`/admin/tipe-anggota/${props.row.id}`"
                       type="button"
@@ -105,6 +105,16 @@
             <h4 class="mb-3 text-success text-center">Add Dashboard</h4>
             <!-- form input -->
             <form>
+              <!-- Dashboard ID -->
+              <div class="mt-2 mx-2">
+                <label for="varID" class="form-label">Dashboard ID</label>
+                <input
+                  v-model="form.dashboardid"
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                />
+              </div>
               <!-- Dashboard Title -->
               <div class="mt-2 mx-2">
                 <label for="varID" class="form-label">Dashboard Title</label>
@@ -132,11 +142,11 @@
                 <label for="varID" class="form-label">Link To Project</label>
                 <vue-multiselect
                   v-model="form.projectid"
-                  :options="projectList"
-                  :custom-label="nameWithLang"
-                  placeholder="Select one"
-                  label="projectname"
-                  track-by="projectid"
+                  :options="projectNewDataID"
+                  :searchable="false"
+                  :close-on-select="true"
+                  :show-labels="false"
+                  placeholder="Pick a value"
                 >
                 </vue-multiselect>
               </div>
@@ -155,6 +165,7 @@
                 type="button"
                 class="btn btn-success"
                 data-bs-dismiss="modal"
+                @click="this.addDashboard(this.form)"
               >
                 Submit
               </button>
@@ -175,50 +186,61 @@ export default {
     VueGoodTable,
     VueMultiselect,
   },
-  computed: { ...mapActions(['deleteDashboardByID', 'fetchDashboard']) },
+  computed: {
+    ...mapState(['dashboards', 'projects']),
+  },
   data() {
     return {
-      ...mapState(['dashboard']),
-      form: { dashboardtitle: '', dashboarddesc: '', projectid: '' },
+      form: {
+        dashboardid: '',
+        dashboardtitle: '',
+        dashboarddesc: '',
+        projectid: '',
+      },
       title: 'Manage Projects',
       data: true,
       dashboardIDNew: 0,
-      projectList: [
-        { projectid: '1', projectname: 'Testing' },
-        { projectid: '2', projectname: 'h' },
-        { projectid: '3', projectname: 'b' },
-      ],
-      dummy: {
-        rows: [
-          {
-            dashboardID: 1,
-            projectID: 'Project1',
-            sharedUserID: 10,
-          },
-          {
-            dashboardID: 1,
-            projectID: 'Project1',
-            sharedUserID: 10,
-          },
-          {
-            dashboardID: 1,
-            projectID: 'Project1',
-            sharedUserID: 10,
-          },
-        ],
-      },
+
+      //GET FROM API
+      dashboardNewData: {},
+      projectNewData: [],
+      projectNewDataID: [],
+
+      // dummy: {
+      //   rows: [
+      //     {
+      //       dashboardID: 1,
+      //       projectID: 'Project1',
+      //       sharedUserID: 10,
+      //     },
+      //     {
+      //       dashboardID: 1,
+      //       projectID: 'Project1',
+      //       sharedUserID: 10,
+      //     },
+      //     {
+      //       dashboardID: 1,
+      //       projectID: 'Project1',
+      //       sharedUserID: 10,
+      //     },
+      //   ],
+      // },
       columns: [
         {
           label: 'Dashboard ID',
-          field: 'dashboardID',
+          field: 'dashboardid',
         },
         {
           label: 'Linked Project',
-          field: 'projectID',
+          field: 'projectid',
         },
         {
-          label: 'Shared User',
-          field: 'sharedUserID',
+          label: 'Dashboard Title',
+          field: 'dashboardtitle',
+        },
+        {
+          label: 'Dashboard Description',
+          field: 'dashboarddesc',
         },
         {
           label: 'Action',
@@ -228,12 +250,31 @@ export default {
     }
   },
   methods: {
-    nameWithLang({ projectname, projectid }) {
-      return `${projectname} — [${projectid}]`
+    ...mapActions([
+      'deleteDashboardByID',
+      'fetchDashboards',
+      'fetchProjects',
+      'addDashboard',
+    ]),
+    nameWithLang({ projectid, projectname }) {
+      return `${projectid} — [${projectname}]`
+    },
+    getProjectOnlyID() {
+      console.log('project lenght', this.projects.length)
+      for (let i = 0; i < this.projects.length; i++) {
+        // console.log(this.projects[i].projectid)
+        this.projectNewDataID.push(this.projects[i].projectid)
+      }
     },
   },
-  created() {
-    this.dashboardIDNew = this.dummy.rows.length + 1
+  async created() {
+    await this.fetchProjects()
+    await this.fetchDashboards()
+    this.dashboardNewData = { ...this.dashboards }
+    this.projectNewData = { ...this.projects }
+    await this.getProjectOnlyID()
+    console.log('TEST', this.projectNewDataID)
+    console.log('GET', this.dashboards)
   },
 }
 </script>
