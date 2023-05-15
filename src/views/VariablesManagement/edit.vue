@@ -41,7 +41,7 @@
           >
             <div class="row">
               <!-- card cloud var -->
-              <div class="col md-8">
+              <div class="col-8 md-8">
                 <div class="card">
                   <div class="card-header align-items-center d-flex">
                     <h6 class="card-title mb-0 flex-grow-1">Cloud Variables</h6>
@@ -57,11 +57,11 @@
                   </div>
                   <div class="card-body h-100">
                     <div class="p-3">
-                      <template v-if="dummy?.rows">
+                      <template v-if="cloudvararr">
                         <div class="table-responsive table-card">
                           <vue-good-table
                             :columns="columns"
-                            :rows="dummy.rows"
+                            :rows="cloudvararr"
                             :search-options="{
                               enabled: true,
                               trigger: 'enter',
@@ -89,15 +89,26 @@
                             <template v-slot:table-row="props">
                               <span v-if="props.column.field === 'action'">
                                 <b-button
+                                @click="this.getDetailCloudVar(props.row.varid)"
                                   data-bs-toggle="modal"
                                   data-bs-target="#alertModalEdit"
                                   type="button"
                                   class="btn btn-primary btn-sm btn-label waves-effect waves-light rounded-pill"
                                 >
                                   <i
-                                    class="ri-arrow-right-circle-fill label-icon align-middle rounded-pill fs-16 me-2"
+                                    class="bi bi-pencil-fill"
                                   ></i>
-                                  Detail
+                                  
+                                </b-button>
+                                <b-button
+                                 
+                                  type="button"
+                                  class="btn btn-danger mx-1 btn-sm btn-label waves-effect waves-light rounded-pill"
+                                >
+                                  <i
+                                    class="bi bi-trash-fill"
+                                  ></i>
+                                  
                                 </b-button>
                                 <!-- <router-link class="btn btn-sm btn-success"
                                         :to="`/admin/tipe-anggota/${props.row.id}`">
@@ -130,40 +141,44 @@
                     <h6 class="card-title mb-0 flex-grow-1">
                       Device Information
                     </h6>
-                    <button class="btn btn-success" style="color: aliceblue">
-                      Confirm Device Information
-                    </button>
+                    
                   </div>
                   <div class="card-body">
-                    <form>
-                      <div class="mb-3">
-                        <label for="disabledSelect" class="form-label"
-                          >Choose Your Device</label
-                        >
-                        <select id="disabledSelect" class="form-select">
-                          <option
-                            v-for="item in deviceoption"
-                            :key="item.id"
-                            :value="item.devicename"
-                          >
-                            {{ item.devicename }}
-                          </option>
-                        </select>
-                      </div>
-                      <div class="mb-3">
-                        <label for="disabledTextInput" class="form-label"
-                          >Device Type</label
-                        >
-                        <input
-                          disabled
-                          v-model="deviceoption[0].devicetype"
-                          type="text"
-                          id="disabledTextInput"
-                          class="form-control"
-                          placeholder="Disabled input"
-                        />
-                      </div>
-                    </form>
+          <form>
+            <div class="mb-3">
+              <label for="disabledSelect" class="form-label"
+                >Choose Your Device</label
+              >
+              
+              <select
+                id="disabledSelect"
+                class="form-select"
+                v-model="form.devid"
+              >
+                <option
+                  v-for="item in newDevicesData"
+                  :key="item.devid"
+                  :value="item.devid"
+                  disabled
+                >
+                  {{ item.devname }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label"
+                >Device ID</label
+              >
+              <input
+                disabled
+                v-model="form.devid"
+                type="text"
+                id="disabledTextInput"
+                class="form-control"
+                placeholder="Disabled input"
+              />
+            </div>
+          </form>
                   </div>
                 </div>
               </div>
@@ -223,19 +238,19 @@
             </h4>
             <!-- form input -->
             <form>
-              <div class="mt-2 mx-2">
+              <!-- <div class="mt-2 mx-2">
                 <label for="varID" class="form-label">Var ID</label>
-                <input
+                <input v-model="form.varid"
                   type="text"
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                 />
-              </div>
+              </div> -->
               <div class="mb-2 mx-2">
                 <label for="varName" class="form-label">Variable Name</label>
-                <input
-                  type="text"
+                <input v-model="this.form.varname"
+                  type="text" 
                   class="form-control"
                   id="exampleInputPassword1"
                 />
@@ -246,18 +261,20 @@
                 <select
                   id="disabledSelect"
                   class="form-select"
-                  v-model="formula"
+                  v-model="this.form.vartype"
                 >
-                  <option v-for="item in datatypeOption" :key="item">
-                    {{ item }}
+                  <option v-for="item in datatypeOption" :key="item.optionKey" :value="item.optionKey">
+                    {{ item.name }}
                   </option>
+                  
                 </select>
               </div>
+              
 
               <!-- formula input -->
-              <div class="mb-2 mx-2" v-if="this.formula === 'formula'">
+              <div class="mb-2 mx-2" v-if="this.form.vartype === 'f'">
                 <label for="varFormula" class="form-label">Enter Formula</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" v-model="form.varformula">
                 <div id="passwordHelpBlock" class="form-text text-success">
                   *Basic formula can provide calculation from platform with
                   basic math operation such as +,-,/,x.*
@@ -271,69 +288,53 @@
                     >Variable Role Access</label
                   >
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline" v-for="items in roleAccess" :key="items">
                   <input
+                  v-model="form.varaccess"
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="inlineRadio1"
-                    value="w"
+                    :value="items.type"
                   />
                   <label class="form-check-label mx-2" for="inlineRadio1"
-                    >Write</label
-                  >
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio2"
-                    value="r"
-                  />
-                  <label class="form-check-label mx-2" for="inlineRadio2"
-                    >Read</label
+                    >{{ items.name }}</label
                   >
                 </div>
               </div>
 
               <!-- var timestamp -->
-              <div class="mb-2 mx-2">
+              <div class="mb-2 mx-2 mt-3">
                 <div class="row">
                   <label for="varTimeStamp" class="form-label"
                     >Variable Time Update</label
                   >
                 </div>
-
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label mx-2" for="inlineRadio3"
-                  >Periodically</label
-                >
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label" for="inlineRadio3"
-                  >On Update</label
-                >
-                <div class="mt-2">
-                  <label for="varID" class="form-label">Time Update (ms)</label>
+                <div class="form-check form-check-inline" v-for="items in PeriodTime" :key="items.optionKey">
                   <input
+                    :value="items.optionKey"
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions2"
+                    id="inlineRadio3"
+                    v-model="form.schedid"
+                    
+                  />
+                <label class="form-check-label mx-2" for="inlineRadio3"
+                  >{{items.name}}</label
+                >
+              </div>
+                {{ form.schedid }}
+                <!-- period time ms -->
+                <!-- <div class="mt-2">
+                  <label for="varID" class="form-label">Time Update (ms)</label>
+                  <input 
                     type="text"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                   />
-                </div>
+                </div> -->
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -350,6 +351,7 @@
                 type="button"
                 class="btn btn-success"
                 data-bs-dismiss="modal"
+                @click="addCloudVar(this.form)"
               >
                 Submit
               </button>
@@ -374,23 +376,23 @@
         <div class="modal-body">
           <div class="mt-4">
             <h4 class="mb-3 text-success text-center">
-              Edit Cloud Variables Information
+              Add Cloud Variables Information
             </h4>
             <!-- form input -->
             <form>
-              <div class="mt-2 mx-2">
+              <!-- <div class="mt-2 mx-2">
                 <label for="varID" class="form-label">Var ID</label>
-                <input
+                <input v-model="form.varid"
                   type="text"
                   class="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                 />
-              </div>
+              </div> -->
               <div class="mb-2 mx-2">
                 <label for="varName" class="form-label">Variable Name</label>
-                <input
-                  type="text"
+                <input v-model="this.formEdit.varname"
+                  type="text" 
                   class="form-control"
                   id="exampleInputPassword1"
                 />
@@ -401,18 +403,20 @@
                 <select
                   id="disabledSelect"
                   class="form-select"
-                  v-model="formula"
+                  v-model="this.formEdit.vartype"
                 >
-                  <option v-for="item in datatypeOption" :key="item">
-                    {{ item }}
+                  <option v-for="item in datatypeOption" :key="item.optionKey" :value="item.optionKey">
+                    {{ item.name }}
                   </option>
+                  
                 </select>
               </div>
+              
 
               <!-- formula input -->
-              <div class="mb-2 mx-2" v-if="this.formula === 'formula'">
+              <div class="mb-2 mx-2" v-if="this.formEdit.vartype === 'f'">
                 <label for="varFormula" class="form-label">Enter Formula</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" v-model="formEdit.varformula">
                 <div id="passwordHelpBlock" class="form-text text-success">
                   *Basic formula can provide calculation from platform with
                   basic math operation such as +,-,/,x.*
@@ -426,69 +430,53 @@
                     >Variable Role Access</label
                   >
                 </div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline" v-for="items in roleAccess" :key="items">
                   <input
+                  v-model="formEdit.varaccess"
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions"
                     id="inlineRadio1"
-                    value="w"
+                    :value="items.type"
                   />
                   <label class="form-check-label mx-2" for="inlineRadio1"
-                    >Write</label
-                  >
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio2"
-                    value="r"
-                  />
-                  <label class="form-check-label mx-2" for="inlineRadio2"
-                    >Read</label
+                    >{{ items.name }}</label
                   >
                 </div>
               </div>
 
               <!-- var timestamp -->
-              <div class="mb-2 mx-2">
+              <div class="mb-2 mx-2 mt-3">
                 <div class="row">
                   <label for="varTimeStamp" class="form-label"
                     >Variable Time Update</label
                   >
                 </div>
-
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label mx-2" for="inlineRadio3"
-                  >Periodically</label
-                >
-                <input
-                  class="form-check-input mx-2"
-                  type="radio"
-                  name="inlineRadioOptions2"
-                  id="inlineRadio3"
-                  value="r"
-                />
-                <label class="form-check-label" for="inlineRadio3"
-                  >On Update</label
-                >
-                <div class="mt-2">
-                  <label for="varID" class="form-label">Time Update (ms)</label>
+                <div class="form-check form-check-inline" v-for="items in PeriodTime" :key="items.optionKey">
                   <input
+                    :value="items.optionKey"
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions2"
+                    id="inlineRadio3"
+                    v-model="formEdit.schedid"
+                    
+                  />
+                <label class="form-check-label mx-2" for="inlineRadio3"
+                  >{{items.name}}</label
+                >
+              </div>
+                
+                <!-- period time ms -->
+                <!-- <div class="mt-2">
+                  <label for="varID" class="form-label">Time Update (ms)</label>
+                  <input 
                     type="text"
                     class="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                   />
-                </div>
+                </div> -->
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -505,6 +493,7 @@
                 type="button"
                 class="btn btn-success"
                 data-bs-dismiss="modal"
+                @click="this.updateCloudVarByID(this.formEdit)"
               >
                 Submit
               </button>
@@ -518,64 +507,92 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
+import { mapActions, mapState } from 'vuex';
 export default {
   components: {
     VueGoodTable,
+  },
+  methods:{
+    ...mapActions(['fetchCloudVarArr','fetchDevices','addCloudVar','fetchCloudVarByIDDev','fetchCloudVarByID','updateCloudVarByID']),
+   async getDetailCloudVar(params){
+     this.formEdit.varid=params
+      var newParams={
+        'varid':params,
+        'devid':this.$route.params.id
+      };
+      console.log("PARAMS",newParams)
+     await this.fetchCloudVarByID(newParams)
+      console.log(this.cloudvar)
+      this.formEdit={...this.cloudvar[0]}
+      console.log("FROM FILL",this.formEdit)
+    }
+  },
+  computed:{
+    ...mapState(['cloudvararr','devices','cloudvar'])
   },
   data() {
     return {
       title: 'Manage Projects',
       data: true,
+      choosenDevice:"",
+      datatypeOption:[{
+        name:"Integer",
+        optionKey:"i"
+      },
+    {
+      name:"String",
+      optionKey:'s',
+    },
+  {
+    name:"Float/Double",
+    optionKey:'d'
+  },
+{
+  name:"Formula",
+  optionKey:'f',
+      }],
+      PeriodTime:[{
+        name:"Periodically",
+        optionKey:"p"
+      }
+    ,{
+      name:"On Change",
+      optionKey:"o"
+    }],
+
+      newDevicesData:{},
+      /////kirm data
+      form:{
+        varaccess:null,
+        devid:this.$route.params.id,
+        varformula:null,
+        varname:null,
+        schedid:null,
+        vartype:null,
+      },
+      formEdit:{
+        varid:'',
+        varaccess:null,
+        varformula:null,
+        varname:null,
+        schedid:null,
+        vartype:null,
+      },
+      getRouteParams:{
+        devid:this.$route.params.id
+      },
+      roleAccess:[{
+        name:"Read Only",
+        type:"r"
+      },
+    {
+      name:"Write & Read",
+      type:"a"
+    }],
       deviceoption: [
         { devicetype: 'ESP8266', devicename: 'device1', id: '1' },
         { devicetype: 'ESP32', devicename: 'device2', id: '2' },
       ],
-      dummy: {
-        rows: [
-          {
-            varid: 1,
-            varname: 'Device 1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 2,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-          {
-            varid: 3,
-            varname: 'Project1',
-
-            lastaccess: 'yyyy/mm/dd',
-          },
-        ],
-      },
       columns: [
         {
           label: 'Variables ID',
@@ -597,6 +614,15 @@ export default {
       ],
     }
   },
+   async created(){
+    await this.fetchCloudVarByIDDev(this.form.devid);
+    await this.fetchDevices();
+    this.newDevicesData={...this.devices}
+    this.newCloudArr={...this.cloudvararr}
+    console.log("New Cloud ARR", this.newCloudArr)
+    console.log("DEVICES",this.newDevicesData)
+
+  }
 }
 </script>
 

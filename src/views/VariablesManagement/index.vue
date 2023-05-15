@@ -14,11 +14,11 @@
       </div>
       <!-- GoodTable -->
       <div class="p-3">
-        <template v-if="dummy?.rows">
+        <template v-if="devices">
           <div class="table-responsive table-card">
             <vue-good-table
               :columns="columns"
-              :rows="dummy.rows"
+              :rows="devices"
               :search-options="{
                 enabled: true,
                 trigger: 'enter',
@@ -44,7 +44,7 @@
             >
               <template v-slot:table-row="props">
                 <span v-if="props.column.field === 'action'">
-                  <router-link :to="`/variables/${props.row.deviceid}`">
+                  <router-link :to="`/variables/${props.row.devid}`">
                     <b-button
                       type="button"
                       class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
@@ -81,7 +81,7 @@
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
-
+import { mapActions,mapState } from 'vuex';
 export default {
   components: {
     VueGoodTable,
@@ -90,6 +90,7 @@ export default {
     return {
       title: 'Manage Projects',
       data: true,
+      newDeviceData:{},
       dummy: {
         rows: [
           {
@@ -115,16 +116,16 @@ export default {
       columns: [
         {
           label: 'Device ID',
-          field: 'deviceid',
+          field: 'devid',
         },
         {
           label: 'Device Name',
-          field: 'devicename',
+          field: 'devname',
         },
-        {
-          label: 'Number of Variables',
-          field: 'cntvar',
-        },
+        // {
+        //   label: 'Number of Variables',
+        //   field: 'cntvar',
+        // },
 
         {
           label: 'Action',
@@ -133,7 +134,17 @@ export default {
       ],
     }
   },
-  created() {},
+  methods:{
+    ...mapActions(['fetchDevices'])
+  },
+  computed:{
+    ...mapState(['devices']),
+  },
+  async created() {
+    await this.fetchDevices();
+    this.newDeviceData={...this.devices}
+    console.log("DEVICE DATA",this.newDeviceData)
+  },
 }
 </script>
 

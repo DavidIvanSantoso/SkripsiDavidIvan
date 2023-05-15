@@ -155,25 +155,34 @@ export default createStore({
         commit("SET_CLOUDVARARR",res.data)
       }
     },
-    async fetchCloudVarByID({commit},params){
-      const res = await axios.get(`${baseServiceUrl}/variables/${params}`)
+    async fetchCloudVarByIDDev({commit},params){
+      console.log(params.devid)
+      const res = await axios.get(`${baseServiceUrl}/devicevar/${params}`)
       if(res){
+        console.log('RES DATA',res.data)
+        commit("SET_CLOUDVARARR",res.data)
+      }
+    },
+    async fetchCloudVarByID({commit},params){
+      const res = await axios.get(`${baseServiceUrl}/devicevar/${params.devid}/${params.varid}`,params)
+      if(res){
+        console.log('CLOUD DATA',res.data)
         commit("SET_CLOUDVAR",res.data)
       }
     },
     async addCloudVar(_,params){
-       await axios.post(`${baseServiceUrl}/variables`,params).then((res)=>{
+       await axios.post(`${baseServiceUrl}/devicevar`,params).then((res)=>{
         console.log('Response Callback',res)
       })
     },
     async updateCloudVarByID(_,params){
-      await axios.put(`${baseServiceUrl}/variables/${params.id}`,params.data).then((res)=>{
+      await axios.put(`${baseServiceUrl}/devicevar`,params).then((res)=>{
         console.log('Response Callback',res);
       })
     },
     async deleteCloudVarByID(_,params){
       console.log("ROW COUNT",params);
-      await axios.delete(`${baseServiceUrl}/variables/${params}`).then((res)=>{
+      await axios.delete(`${baseServiceUrl}/devicevar/${params}`).then((res)=>{
         console.log("Response Callback",res);
       })
     },
