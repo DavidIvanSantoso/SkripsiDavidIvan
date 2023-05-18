@@ -79,7 +79,7 @@
         <!--useCssTransforms: props.useCssTransforms-->
         <!--width: width.value-->
         <grid-item
-          v-for="item in layout"
+          v-for="item in this.layout"
           :key="item.i"
           v-bind="gridItemProps"
           :x="item.x"
@@ -103,11 +103,8 @@
           <div class="row px-3">
             <div class="card mt-3" style="width: 100% !important">
               <div class="card-header align-items-center d-flex">
-                <div
-                  class="card-text flex-grow-1 mx-2"
-                  :v-model="item.widgetTitleName"
-                >
-                  {{ item.widgetTitleName }}
+                <div class="card-text flex-grow-1 mx-2" :v-model="item.title">
+                  {{ item.title }}
                 </div>
                 <button
                   class="btn btn-dark d-flex mx-1"
@@ -124,28 +121,28 @@
                 </button>
               </div>
               <div class="card-body">
-                <section v-if="item.widgettype === 1">
+                <section v-if="item.widgettypeid === 'Value'">
                   <Value></Value>
                 </section>
-                <section v-else-if="item.widgettype === 2">
+                <section v-else-if="item.widgettypeid === 'Button'">
                   <Button></Button>
                 </section>
-                <section v-else-if="item.widgettype === 3">
+                <section v-else-if="item.widgettypeid === 'Switch'">
                   <SwitchVue></SwitchVue>
                 </section>
-                <section v-else-if="item.widgettype === 4">
+                <section v-else-if="item.widgettypeid === 'LineChart'">
                   <LineChart></LineChart>
                 </section>
-                <section v-else-if="item.widgettype === 5">
+                <section v-else-if="item.widgettypeid === 'PieChart'">
                   <PieChart></PieChart>
                 </section>
-                <section v-else-if="item.widgettype === 6">
+                <section v-else-if="item.widgettypeid === 'BarChart'">
                   <VerticalBarChartVue></VerticalBarChartVue>
                 </section>
-                <section v-else-if="item.widgettype === 7">
+                <section v-else-if="item.widgettypeid === 'LED'">
                   <LedVue></LedVue>
                 </section>
-                <section v-else-if="item.widgettype === 8">
+                <section v-else-if="item.widgettypeid === 'Stepper'">
                   <StepperVue></StepperVue>
                 </section>
               </div>
@@ -874,7 +871,7 @@ import StepperVue from '../WidgetsComponent/Stepper.vue'
 import { ColorInputWithoutInstance } from 'tinycolor2'
 import { ref } from 'vue'
 import VueMultiselect from 'vue-multiselect'
-
+import { mapActions, mapState } from 'vuex'
 export default {
   components: {
     Value,
@@ -895,6 +892,9 @@ export default {
 
     return { pureColor, gradientColor }
   },
+  computed: {
+    ...mapState(['widget', 'widgetarr']),
+  },
   data() {
     return {
       //multiselect data
@@ -905,22 +905,6 @@ export default {
         { name: 'Open Source', code: 'os' },
       ],
       layout: [
-        // {
-        //   x: 0,
-        //   y: 0,
-        //   w: 3,
-        //   h: 4.5,
-        //   i: '0',
-        //   widgettype: 4,
-        //   widgetTitleName: 'Hoi',
-        //   modalTarget: '#alertModalLineChart',
-        // },
-        // { x: 2, y: 0, w: 2, h: 4.5, i: '1', widgettype: 2 },
-        // { x: 4, y: 0, w: 2, h: 4.5, i: '2', widgettype: 3 },
-        // { x: 6, y: 0, w: 5.5, h: 11.5, i: '3', widgettype: 4 },
-        // { x: 8, y: 0, w: 5.5, h: 11.5, i: '4', widgettype: 5 },
-        // { x: 8, y: 2, w: 5, h: 10, i: '5', widgettype: 6 },
-        // { x: 0, y: 5, w: 2, h: 4.5, i: '6', widgettype: 7 },
         //note size Widgets
         //value,led,button, switch (h:4.5 , w:2)
         //all chart (h:5.5, h:11,5)
@@ -992,6 +976,12 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'createDashWidget',
+      'fetchWidgetsByIDDashboard',
+      'deleteDashWidgetByID',
+    ]),
+
     addTag(newTag) {
       const tag = {
         name: newTag,
@@ -1000,10 +990,14 @@ export default {
       this.options.push(tag)
       this.value.push(tag)
     },
+
+    //WIDGETS CONFIG FUNCTION
     addWidgets(val) {
+      let newWidget = {}
       let newW = 0
       let newH = 0
       let modalTarget = ''
+      let widgettypeid = ''
 
       //note size Widgets
       //value,led,button, switch (h:4.5 , w:2)
@@ -1027,51 +1021,66 @@ export default {
       }
 
       //modalTarget
-
       switch (val) {
         case 1:
           modalTarget = '#alertModalValue'
+          widgettypeid = 'Value'
           break
         case 2:
           modalTarget = '#alertModalButton'
+          widgettypeid = 'Button'
           break
         case 3:
           modalTarget = '#alertModalSwitch'
+          widgettypeid = 'Switch'
           break
         case 4:
           modalTarget = '#alertModalLineChart'
+          widgettypeid = 'LineChart'
           break
         case 5:
           modalTarget = '#alertModalPieChart'
+          widgettypeid = 'PieChart'
           break
         case 6:
           modalTarget = '#alertModalVerticalBarChart'
+          widgettypeid = 'BarChart'
           break
         case 7:
           modalTarget = '#alertModalLED'
+          widgettypeid = 'LED'
           break
         case 8:
           modalTarget = '#alertModalStepper'
+          widgettypeid = 'Stepper'
           break
       }
+      //setupobject
+      ;(newWidget.x = (this.widgetarr.length * 2) % (this.colNum || 12)),
+        (newWidget.y = this.widgetarr.length + (this.colNum || 12)),
+        (newWidget.w = newW),
+        (newWidget.h = newH),
+        (newWidget.i = this.index),
+        (newWidget.widgettypeid = widgettypeid),
+        (newWidget.widgettype = val),
+        (newWidget.title = 'Empty Title'),
+        (newWidget.modalTarget = modalTarget),
+        (newWidget.varid = ''),
+        (newWidget.dashboardid = this.$route.params.id)
+      this.layout.push(newWidget)
 
-      this.layout.push({
-        x: (this.layout.length * 2) % (this.colNum || 12),
-        y: this.layout.length + (this.colNum || 12),
-
-        w: newW,
-        h: newH,
-        i: this.index,
-        widgettype: val,
-        widgetTitleName: 'Empty Title',
-        modalTarget: modalTarget,
-      })
       console.log('Test')
       this.index++
+      this.createDashWidget(newWidget)
     },
     removeWidgets(val) {
+      let widgetid = this.layout.map((item) => item.widgetid).indexOf(val)
       const index = this.layout.map((item) => item.i).indexOf(val)
       this.layout.splice(index, 1)
+      this.deleteDashWidgetByID({
+        dashboardid: this.$route.params.id,
+        widgetid: String(widgetid),
+      })
     },
     checkTypeModal(val) {
       switch (val) {
@@ -1103,9 +1112,21 @@ export default {
       this.modalTarget = ''
       console.log('TESTING MODAL ID', this.modalTarget)
     },
+    pushDataGrid() {
+      console.log('WIDGET ARR', this.widgetarr)
+      for (let i = 0; i < this.widgetarr.length; i++) {
+        this.layout.push(this.widgetarr[i])
+      }
+    },
   },
   mounted() {
     this.index = this.layout.length
+  },
+  async created() {
+    await this.fetchWidgetsByIDDashboard({ dashboardid: this.$route.params.id })
+    await this.pushDataGrid()
+    console.log('GRID', this.layout)
+    console.log('DATA', this.widgetarr)
   },
 }
 </script>

@@ -8,14 +8,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
-    redirect: '/dashboard',
+    redirect: '/pages/login',
     children: [
-      {
-        path: '/dashboard',
-        name: 'Dashboard',
-        component: () =>
-        import('@/views/Dashboard.vue'),
-      },
+      // {
+      //   path: '/dashboard',
+      //   name: 'Dashboard',
+      //   component: () =>
+      //   import('@/views/Dashboard.vue'),
+      // },
       //-------------------------------------------PAGES PLATFORM IOT------------------------------------------------
       //Project
       {

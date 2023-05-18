@@ -18,7 +18,7 @@ import Vue3ColorPicker from "vue3-colorpicker";
 import Select2 from 'vue3-select2-component';
 // import Multiselect from 'vue-multiselect'
 import VueMultiselect from 'vue-multiselect'
-
+import Notifications from '@kyvg/vue3-notification'
 
 // import the styles 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
@@ -46,6 +46,7 @@ app.use(GridLayout);
 app.use(Vue3ColorPicker);
 app.use(Select2);
 app.use(VueMultiselect);
+app.use(Notifications)
 
 
 

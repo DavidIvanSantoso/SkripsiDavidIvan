@@ -111,7 +111,7 @@
                         <button
                           type="button"
                           class="btn btn-primary btn-lg"
-                          @click="userLogin(this.form)"
+                          @click="loginConfirm(this.form)"
                         >
                           Login
                         </button>
@@ -137,7 +137,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
 export default {
+  components: {},
   name: 'Login',
   data() {
     return {
@@ -149,6 +151,23 @@ export default {
   },
   methods: {
     ...mapActions(['userLogin']),
+    loginConfirm(params) {
+      this.userLogin(params)
+        .then(() => {
+          this.$notify({
+            title: 'Login Success',
+            type: 'success',
+          })
+          this.$router.push('/project/index')
+        })
+        .catch(() => {
+          this.$notify({
+            title: 'Login Failed',
+            type: 'error',
+            text: 'Wrong Username or Password',
+          })
+        })
+    },
   },
   computed: {
     ...mapState(['userAuth']),

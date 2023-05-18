@@ -44,7 +44,7 @@
               </div>
             </form>
             <div class="button mt-4">
-              <button class="btn btn-success" @click="addProject(this.newData)">
+              <button class="btn btn-success" @click="addProjectRoute()">
                 Submit
               </button>
             </div>
@@ -64,6 +64,10 @@ export default {
   },
   methods: {
     ...mapActions(['addProject']),
+    addProjectRoute() {
+      this.addProject(this.newData)
+      this.$router.go(-1)
+    },
   },
   data() {
     return {
