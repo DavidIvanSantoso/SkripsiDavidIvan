@@ -53,7 +53,7 @@
                           >Password</label
                         >
                         <input
-                          v-model="form.hashkey"
+                          v-model="form.password"
                           type="password"
                           id="form3Example4c"
                           class="form-control"
@@ -69,6 +69,7 @@
                           >Confirm Password</label
                         >
                         <input
+                          v-model="confirmpass"
                           type="password"
                           id="form3Example4cd"
                           class="form-control"
@@ -83,7 +84,7 @@
                       <button
                         type="button"
                         class="btn btn-primary btn-lg"
-                        @click="createUser(this.form)"
+                        @click="createUserRoute(this.form)"
                       >
                         Register
                       </button>
@@ -110,6 +111,7 @@
 </template>
 
 <script>
+import { notify } from '@kyvg/vue3-notification'
 import { mapActions } from 'vuex'
 export default {
   name: 'Register',
@@ -122,10 +124,26 @@ export default {
         email: '',
         role: 'A',
       },
+      confirmpass: null,
     }
   },
   methods: {
     ...mapActions(['createUser']),
+    createUserRoute(params) {
+      if (params.password != this.confirmpass) {
+        console.log(params.password)
+        console.log(this.confirmpass)
+        notify({
+          title: 'Registration Failed',
+          text: 'Password and Confirm Password do not match',
+          type: 'error',
+        })
+      } else if (params.password == this.confirmpass) {
+        this.createUser(params).then(() => {
+          this.$router.push('/pages/login')
+        })
+      }
+    },
   },
 }
 </script>

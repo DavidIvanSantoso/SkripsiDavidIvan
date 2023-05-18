@@ -34,6 +34,7 @@
           <div class="flex-grow-1 bd-highlight">
             <div class="form-group">
               <input
+                v-model="this.getNewDashboardData.dashboardtitle"
                 backround="transparant"
                 type="text"
                 class="form-control"
@@ -115,7 +116,7 @@
                 <button
                   class="btn btn-dark d-flex p"
                   data-bs-toggle="modal"
-                  :data-bs-target="item.modalTarget"
+                  :data-bs-target="item.modaltarget"
                 >
                   <i class="bi bi-three-dots-vertical"></i>
                 </button>
@@ -893,7 +894,7 @@ export default {
     return { pureColor, gradientColor }
   },
   computed: {
-    ...mapState(['widget', 'widgetarr']),
+    ...mapState(['widget', 'widgetarr', 'dashboard']),
   },
   data() {
     return {
@@ -973,6 +974,7 @@ export default {
         { varid: 3, varname: 'Test3', btntext: 'ButtonTest1' },
         { varid: 4, varname: 'Test4', btntext: 'ButtonTest1' },
       ],
+      getNewDashboardData: {},
     }
   },
   methods: {
@@ -980,6 +982,7 @@ export default {
       'createDashWidget',
       'fetchWidgetsByIDDashboard',
       'deleteDashWidgetByID',
+      'fetchDashboardByID',
     ]),
 
     addTag(newTag) {
@@ -1064,7 +1067,7 @@ export default {
         (newWidget.widgettypeid = widgettypeid),
         (newWidget.widgettype = val),
         (newWidget.title = 'Empty Title'),
-        (newWidget.modalTarget = modalTarget),
+        (newWidget.modaltarget = modalTarget),
         (newWidget.varid = ''),
         (newWidget.dashboardid = this.$route.params.id)
       this.layout.push(newWidget)
@@ -1119,14 +1122,16 @@ export default {
       }
     },
   },
-  mounted() {
-    this.index = this.layout.length
-  },
+  mounted() {},
   async created() {
     await this.fetchWidgetsByIDDashboard({ dashboardid: this.$route.params.id })
+    await this.fetchDashboardByID(this.$route.params.id)
+    this.getNewDashboardData = { ...this.dashboard[0] }
     await this.pushDataGrid()
+    this.index = this.widgetarr.length
     console.log('GRID', this.layout)
     console.log('DATA', this.widgetarr)
+    console.log('DASHBOARD DATA', this.dashboard)
   },
 }
 </script>

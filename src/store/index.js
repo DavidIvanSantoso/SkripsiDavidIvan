@@ -137,7 +137,6 @@ export default createStore({
     async fetchDevices({commit}){
       const res = await axios.get(`${baseServiceUrl}/device`)
       if(res){
-        
         commit("SET_DEVICES",res.data)
         notify({ type: "success", title: "Get Data Success 🎉" })
       }
@@ -270,6 +269,8 @@ export default createStore({
         notify({ type: "warning", title: "Delete Data Success 🎉" })
       })
     },
+    
+   
   },
   modules: {},
 

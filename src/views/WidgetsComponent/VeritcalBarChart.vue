@@ -2,7 +2,8 @@
   <!-- graph component -->
   <div class="row" style="width: 100%">
     <apexchart
-      width="450"
+      width="100%"
+      height="auto"
       type="bar"
       :options="options"
       :series="series"
