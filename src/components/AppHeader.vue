@@ -10,14 +10,18 @@
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
           <router-link to="/project/index" style="text-decoration: none">
-            <CNavLink> Home </CNavLink>
+            <CNavLink> Project </CNavLink>
           </router-link>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Users</CNavLink>
+          <router-link to="/device/index" style="text-decoration: none">
+            <CNavLink> Device </CNavLink>
+          </router-link>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="#">Settings</CNavLink>
+          <router-link to="/shareuser/index" style="text-decoration: none">
+            <CNavLink> User </CNavLink>
+          </router-link>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav>

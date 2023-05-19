@@ -13,15 +13,7 @@ export default [
   //     text: 'NEW',
   //   },
   // },
-  {
-    component: 'CNavItem',
-    name: 'Projects',
-    to: '/project/index',
-    icon: 'cil-file',
-    badge: {
-      color: 'primary',
-    },
-  },
+ 
   {
     component: 'CNavItem',
     name: 'Devices',
@@ -32,14 +24,24 @@ export default [
     },
   },
   {
-    component: 'CNavTitle',
-    name: 'Project Management',
-  },
-  {
     component: 'CNavItem',
     name: 'IoT Variables',
     to: '/variables/index',
     icon: 'cil-cloud',
+    badge: {
+      color: 'primary',
+    },
+  },
+  {
+    component: 'CNavTitle',
+    name: 'Project Management',
+  },
+  
+   {
+    component: 'CNavItem',
+    name: 'Projects',
+    to: '/project/index',
+    icon: 'cil-file',
     badge: {
       color: 'primary',
     },
