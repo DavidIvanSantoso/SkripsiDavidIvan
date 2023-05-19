@@ -13,9 +13,9 @@
   >
     <CSidebarBrand>
       <img
-        src="@/assets/brand/logo.png"
+        src="@/assets/brand/logo_white.png"
         class="fluid"
-        style="width: 3rem; height: 3rem"
+        style="width: 3rem; height: 1rem"
       />
       <p style="text-align: left" class="mx-3 mt-3">Platform IoT</p>
     </CSidebarBrand>

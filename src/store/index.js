@@ -84,6 +84,7 @@ export default createStore({
       if(res){
         
         commit("SET_USERAUTH",res.data)
+        localStorage.setItem('userCreds',JSON.stringify(res.data))
         notify({ type: "success", title: "Login Success 🎉" })
       }
       },
@@ -127,7 +128,7 @@ export default createStore({
     },
     async deleteProjectByID(_,params){
       console.log("PRAMS",params)
-      await axios.delete(`${baseServiceUrl}/project`,params).then((res)=>{
+      await axios.delete(`${baseServiceUrl}/project`,{data:{projectid:params.projectid}}).then((res)=>{
         console.log("Response Callback",res);
         notify({ type: "warning", title: "Delete Data Success 🎉" })
       })
@@ -162,8 +163,9 @@ export default createStore({
     },
     async deleteDeviceByID(_,params){
       console.log("ROW COUNT",params);
-      await axios.delete(`${baseServiceUrl}/device/${params}`).then((res)=>{
+      await axios.delete(`${baseServiceUrl}/device`,{data:{devid:params.devid}}).then((res)=>{
         console.log("Response Callback",res);
+        notify({ type: "warning", title: "Delete Data Success 🎉" })
       })
     },
 
@@ -206,7 +208,7 @@ export default createStore({
     },
     async deleteCloudVarByID(_,params){
       console.log("ROW COUNT",params);
-      await axios.delete(`${baseServiceUrl}/devicevar/${params}`).then((res)=>{
+      await axios.delete(`${baseServiceUrl}/devicevar`,{data:{varid:params.varid}}).then((res)=>{
         console.log("Response Callback",res);
          notify({ type: "warning", title: "Delete Data Success 🎉" })
       })
@@ -225,7 +227,7 @@ export default createStore({
       const res = await axios.get(`${baseServiceUrl}/dashboard/${params}`)
       if(res){
         commit("SET_DASHBOARD",res.data)
-         notify({ type: "warning", title: "Get Data Success 🎉" })
+         notify({ type: "success", title: "Get Data Success 🎉" })
       }
     },
     async addDashboard(_,params){
@@ -243,8 +245,9 @@ export default createStore({
     },
     async deleteDashboardByID(_,params){
       console.log("ROW COUNT",params);
-      await axios.delete(`${baseServiceUrl}/dashboard/${params}`).then((res)=>{
+      await axios.delete(`${baseServiceUrl}/dashboard`,{data:{dashboardid:params.dashboardid}}).then((res)=>{
         console.log("Response Callback",res);
+        notify({ type: "warning", title: "Delete Data Success 🎉" })
       })
     },
 
@@ -264,7 +267,8 @@ export default createStore({
       }
     },
      async deleteDashWidgetByID(_,params){
-      await axios.delete(`${baseServiceUrl}/dashwidget`,params).then((res)=>{
+      console.log(this.params)
+      await axios.delete(`${baseServiceUrl}/dashwidget`,{data:{widgetid:params.widgetid,dashboardid:params.dashboardid}}).then((res)=>{
         console.log("Response Callback",res);
         notify({ type: "warning", title: "Delete Data Success 🎉" })
       })

@@ -50,7 +50,7 @@
             >
               <input
                 class="form-check-input"
-                style="width: 0.5rem !important; height: 0.5rem"
+                style="width: 1rem !important; height: 1rem !important"
                 type="radio"
                 name="flexRadioDefault"
                 id="role"

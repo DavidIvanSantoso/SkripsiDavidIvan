@@ -2,7 +2,7 @@
   <div class="dashboard">
     <!-- Link Variables -->
 
-    <div class="row">
+    <div class="row-12">
       <nav
         class="navbar navbar-expand-lg navbar-dark bg-success rounded-top align-items-center"
       >
@@ -64,7 +64,13 @@
     </div>
 
     <!-- grid -->
-    <grid-layout v-model:layout="layout" :col-num="12" :row-height="30">
+    <grid-layout
+      v-model:layout="layout"
+      :col-num="12"
+      :row-height="30"
+      style="width: 100% !important"
+      responsive="true"
+    >
       <template #default="{ gridItemProps }">
         <!-- | gridItemProps props from GridLayout | -->
         <!--breakpointCols: props.cols-->
@@ -109,7 +115,7 @@
                 </div>
                 <button
                   class="btn btn-dark d-flex mx-1"
-                  @click="removeWidgets(item.i)"
+                  @click="removeWidgets(item.i, item.widgetid)"
                 >
                   <i class="bi bi-trash-fill"></i>
                 </button>
@@ -123,28 +129,30 @@
               </div>
               <div class="card-body">
                 <section v-if="item.widgettypeid === 'Value'">
-                  <Value></Value>
+                  <Value :varid="item.varid" :vardata="0"></Value>
                 </section>
                 <section v-else-if="item.widgettypeid === 'Button'">
-                  <Button></Button>
+                  <Button :varid="item.varid"></Button>
                 </section>
                 <section v-else-if="item.widgettypeid === 'Switch'">
-                  <SwitchVue></SwitchVue>
+                  <SwitchVue :varid="item.varid"></SwitchVue>
                 </section>
                 <section v-else-if="item.widgettypeid === 'LineChart'">
-                  <LineChart></LineChart>
+                  <LineChart :varid="item.varid"></LineChart>
                 </section>
                 <section v-else-if="item.widgettypeid === 'PieChart'">
-                  <PieChart></PieChart>
+                  <PieChart :varid="item.varid"></PieChart>
                 </section>
                 <section v-else-if="item.widgettypeid === 'BarChart'">
-                  <VerticalBarChartVue></VerticalBarChartVue>
+                  <VerticalBarChartVue
+                    :varid="item.varid"
+                  ></VerticalBarChartVue>
                 </section>
                 <section v-else-if="item.widgettypeid === 'LED'">
-                  <LedVue></LedVue>
+                  <LedVue :varid="item.varid"></LedVue>
                 </section>
                 <section v-else-if="item.widgettypeid === 'Stepper'">
-                  <StepperVue></StepperVue>
+                  <StepperVue :varid="item.varid"></StepperVue>
                 </section>
               </div>
             </div>
@@ -185,15 +193,16 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <select class="form-select" aria-label="Default select example">
-                  <option
-                    v-for="item in varDummy"
-                    :key="item.varid"
-                    :value="item.varid"
-                  >
-                    {{ item.varname }}
-                  </option>
-                </select>
+                <VueMultiselect
+                  v-model="value"
+                  :options="options"
+                  label="varname"
+                  track-by="varid"
+                  :searchable="false"
+                  :close-on-select="true"
+                  placeholder="Pick a value"
+                >
+                </VueMultiselect>
               </div>
               <!-- Button Text -->
               <div class="mt-2 mx-2">
@@ -259,15 +268,16 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <select class="form-select" aria-label="Default select example">
-                  <option
-                    v-for="item in varDummy"
-                    :key="item.varid"
-                    :value="item.varid"
-                  >
-                    {{ item.varname }}
-                  </option>
-                </select>
+                <VueMultiselect
+                  v-model="value"
+                  :options="options"
+                  label="varname"
+                  track-by="varid"
+                  :searchable="false"
+                  :close-on-select="true"
+                  placeholder="Pick a value"
+                >
+                </VueMultiselect>
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -323,15 +333,16 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <select class="form-select" aria-label="Default select example">
-                  <option
-                    v-for="item in varDummy"
-                    :key="item.varid"
-                    :value="item.varid"
-                  >
-                    {{ item.varname }}
-                  </option>
-                </select>
+                <VueMultiselect
+                  v-model="value"
+                  :options="options"
+                  label="varname"
+                  track-by="varid"
+                  :searchable="false"
+                  :close-on-select="true"
+                  placeholder="Pick a value"
+                >
+                </VueMultiselect>
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -387,15 +398,16 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <select class="form-select" aria-label="Default select example">
-                  <option
-                    v-for="item in varDummy"
-                    :key="item.varid"
-                    :value="item.varid"
-                  >
-                    {{ item.varname }}
-                  </option>
-                </select>
+                <VueMultiselect
+                  v-model="value"
+                  :options="options"
+                  label="varname"
+                  track-by="varid"
+                  :searchable="false"
+                  :close-on-select="true"
+                  placeholder="Pick a value"
+                >
+                </VueMultiselect>
               </div>
               <!-- color picker -->
               <div class="mb-2 mx-2">
@@ -471,8 +483,8 @@
                   v-model="value"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
+                  label="varname"
+                  track-by="varid"
                   :options="options"
                   :multiple="true"
                   :taggable="true"
@@ -579,8 +591,8 @@
                   v-model="value"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
+                  label="varname"
+                  track-by="varid"
                   :options="options"
                   :multiple="true"
                   :taggable="true"
@@ -664,8 +676,8 @@
                   v-model="value"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
+                  label="varname"
+                  track-by="varid"
                   :options="options"
                   :multiple="true"
                   :taggable="true"
@@ -766,15 +778,16 @@
                 <label for="varName" class="form-label"
                   >Link to Variables</label
                 >
-                <select class="form-select" aria-label="Default select example">
-                  <option
-                    v-for="item in varDummy"
-                    :key="item.varid"
-                    :value="item.varid"
-                  >
-                    {{ item.varname }}
-                  </option>
-                </select>
+                <VueMultiselect
+                  v-model="value"
+                  :options="options"
+                  label="varname"
+                  track-by="varid"
+                  :searchable="false"
+                  :close-on-select="true"
+                  placeholder="Pick a value"
+                >
+                </VueMultiselect>
               </div>
             </form>
             <div class="hstack gap-2 justify-content-center mt-2">
@@ -826,8 +839,8 @@
                   v-model="value"
                   tag-placeholder="Add this as new tag"
                   placeholder="Search or add a tag"
-                  label="name"
-                  track-by="code"
+                  label="varname"
+                  track-by="varid"
                   :options="options"
                   :multiple="true"
                   :taggable="true"
@@ -869,8 +882,7 @@ import PieChart from '../WidgetsComponent/PieChart.vue'
 import VerticalBarChartVue from '../WidgetsComponent/VeritcalBarChart.vue'
 import LedVue from '../WidgetsComponent/Led.vue'
 import StepperVue from '../WidgetsComponent/Stepper.vue'
-import { ColorInputWithoutInstance } from 'tinycolor2'
-import { ref } from 'vue'
+
 import VueMultiselect from 'vue-multiselect'
 import { mapActions, mapState } from 'vuex'
 export default {
@@ -885,25 +897,18 @@ export default {
     StepperVue,
     VueMultiselect,
   },
-  setup() {
-    const pureColor = ref < ColorInputWithoutInstance > 'red'
-    const gradientColor = ref(
-      'linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%)',
-    )
-
-    return { pureColor, gradientColor }
-  },
+  setup() {},
   computed: {
-    ...mapState(['widget', 'widgetarr', 'dashboard']),
+    ...mapState(['widget', 'widgetarr', 'dashboard', 'cloudvararr']),
   },
   data() {
     return {
       //multiselect data
-      value: [{ name: 'Javascript', code: 'js' }],
+      value: [],
       options: [
-        { name: 'Vue.js', code: 'vu' },
-        { name: 'Javascript', code: 'js' },
-        { name: 'Open Source', code: 'os' },
+        // { name: 'Vue.js', code: 'vu' },
+        // { name: 'Javascript', code: 'js' },
+        // { name: 'Open Source', code: 'os' },
       ],
       layout: [
         //note size Widgets
@@ -975,11 +980,15 @@ export default {
         { varid: 4, varname: 'Test4', btntext: 'ButtonTest1' },
       ],
       getNewDashboardData: {},
+
+      //LINK VARIABLES SETUP
+      getNewAllVariables: {},
     }
   },
   methods: {
     ...mapActions([
       'createDashWidget',
+      'fetchCloudVarArr',
       'fetchWidgetsByIDDashboard',
       'deleteDashWidgetByID',
       'fetchDashboardByID',
@@ -987,8 +996,8 @@ export default {
 
     addTag(newTag) {
       const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000),
+        varname: newTag.varname,
+        varid: newTag.varid,
       }
       this.options.push(tag)
       this.value.push(tag)
@@ -1076,13 +1085,13 @@ export default {
       this.index++
       this.createDashWidget(newWidget)
     },
-    removeWidgets(val) {
-      let widgetid = this.layout.map((item) => item.widgetid).indexOf(val)
+    removeWidgets(val, valwidgetid) {
       const index = this.layout.map((item) => item.i).indexOf(val)
       this.layout.splice(index, 1)
+
       this.deleteDashWidgetByID({
         dashboardid: this.$route.params.id,
-        widgetid: String(widgetid),
+        widgetid: valwidgetid,
       })
     },
     checkTypeModal(val) {
@@ -1121,17 +1130,34 @@ export default {
         this.layout.push(this.widgetarr[i])
       }
     },
+
+    //MULTISELECT OPTIONS
+    pushSelectOptions() {
+      for (let i = 0; i < this.cloudvararr.length; i++) {
+        this.options.push({
+          varname: this.cloudvararr[i].varname,
+          varid: this.cloudvararr[i].varid,
+        })
+      }
+      console.log(this.options)
+    },
   },
   mounted() {},
   async created() {
     await this.fetchWidgetsByIDDashboard({ dashboardid: this.$route.params.id })
     await this.fetchDashboardByID(this.$route.params.id)
     this.getNewDashboardData = { ...this.dashboard[0] }
+
+    await this.fetchCloudVarArr()
+    this.getNewAllVariables = { ...this.cloudvararr }
+    this.pushSelectOptions()
+
     await this.pushDataGrid()
     this.index = this.widgetarr.length
     console.log('GRID', this.layout)
     console.log('DATA', this.widgetarr)
     console.log('DASHBOARD DATA', this.dashboard)
+    console.log('CLOUD VAR ARR', this.cloudvararr)
   },
 }
 </script>

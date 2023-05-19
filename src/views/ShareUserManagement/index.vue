@@ -3,7 +3,7 @@
     <!-- Goods tables -->
     <div class="card" style="width: 100%">
       <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Daftar Shared User Access</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Daftar Create User</h4>
         <router-link
           class="btn btn-primary justify-content-end"
           to="/shareuser/add"

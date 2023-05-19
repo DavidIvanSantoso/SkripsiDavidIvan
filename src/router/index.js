@@ -22,6 +22,7 @@ const routes = [
         path: '/project/index',
         name: 'Project',
         component: () => import('@/views/ProjectManagement/index.vue'),
+        
       },
       {
         path: '/project/add',
@@ -73,12 +74,12 @@ const routes = [
         component: () => import('@/views/VariablesManagement/index.vue'),
       },
       {
-        path: '/variables/add',
+        path: '/variables/add/:id',
         name: 'VariablesAdd',
         component: () => import('@/views/VariablesManagement/add.vue'),
       },
       {
-        path: '/variables/:id',
+        path: '/variables/edit/:devid/:id',
         name: 'VariablesEdit',
         component: () => import('@/views/VariablesManagement/edit.vue'),
       },
@@ -375,5 +376,20 @@ const router = createRouter({
     return { top: 0 }
   },
 })
+// Navigation guard
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    // Redirect to the login page if authentication is required but the user is not logged in
+    next('/login');
+  } else {
+    // Continue with the navigation
+    next();
+  }
+});
+
+function isLoggedIn() {
+  // Your login logic here
+  // Return true if the user is logged in, false otherwise
+}
 
 export default router

@@ -56,6 +56,7 @@
                   <b-button
                     type="button"
                     class="btn btn-danger mx-1 btn-sm btn-label waves-effect waves-light rounded-pill"
+                    @click="deleteDeviceByID({ devid: props.row.devid })"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </b-button>

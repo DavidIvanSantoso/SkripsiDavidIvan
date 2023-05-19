@@ -13,20 +13,25 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
+  props: ['quantity'],
   data() {
     return {
-      quantity: 0,
-      varbuttontext: 'Button',
+      // quantity: 0,
+      // varbuttontext: 'Button',
       vartitle: 'Title',
     }
   },
   methods: {
     decrement() {
-      this.quantity -= 1
+      const prop = ref(this.quantity)
+      prop.value -= 1
     },
     increment() {
-      this.quantity += 1
+      const prop = ref(this.quantity)
+      prop.value += 1
     },
   },
 }

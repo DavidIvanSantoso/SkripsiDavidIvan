@@ -4,19 +4,12 @@
     <div class="card" style="width: 100%">
       <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Daftar Dashboard</h4>
-        <!-- <router-link
-
-          :to="`/dashboard/${this.dashboardIDNew}`"
-        > -->
-        <button
-          class="btn btn-primary justify-content-end"
-          data-bs-toggle="modal"
-          data-bs-target="#alertModalAddDashboard"
-        >
-          <i class="bi bi-plus-lg"></i>
-          Tambah Dashboard
-        </button>
-        <!-- </router-link> -->
+        <router-link :to="`/dashboard/add`">
+          <button class="btn btn-primary justify-content-end">
+            <i class="bi bi-plus-lg"></i>
+            Tambah Dashboard
+          </button>
+        </router-link>
       </div>
       <!-- GoodTable -->
       <div class="p-3">
@@ -52,7 +45,6 @@
                 <span v-if="props.column.field === 'action'">
                   <router-link :to="`/dashboard/${props.row.dashboardid}`">
                     <b-button
-                      :to="`/admin/tipe-anggota/${props.row.id}`"
                       type="button"
                       class="btn btn-success btn-sm btn-label waves-effect waves-light rounded-pill"
                     >
@@ -60,6 +52,11 @@
                     </b-button>
                   </router-link>
                   <b-button
+                    @click="
+                      deleteDashboardByID({
+                        dashboardid: props.row.dashboardid,
+                      })
+                    "
                     type="button"
                     class="btn btn-danger btn-sm btn-label waves-effect waves-light rounded-pill mx-1"
                   >
@@ -88,103 +85,15 @@
       </div>
     </div>
   </div>
-
-  <!-- modal -->
-  <div
-    id="alertModalAddDashboard"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="alertModalTitle"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="mt-4">
-            <h4 class="mb-3 text-success text-center">Add Dashboard</h4>
-            <!-- form input -->
-            <form>
-              <!-- Dashboard ID -->
-              <div class="mt-2 mx-2">
-                <label for="varID" class="form-label">Dashboard ID</label>
-                <input
-                  v-model="form.dashboardid"
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-              <!-- Dashboard Title -->
-              <div class="mt-2 mx-2">
-                <label for="varID" class="form-label">Dashboard Title</label>
-                <input
-                  v-model="form.dashboardtitle"
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-              <!-- Dashboard Title -->
-              <div class="mt-2 mx-2">
-                <label for="varID" class="form-label"
-                  >Dashboard Description</label
-                >
-                <input
-                  v-model="form.dashboarddesc"
-                  type="text"
-                  class="form-control"
-                  aria-describedby="emailHelp"
-                />
-              </div>
-              <!-- Select Project Title -->
-              <div class="mt-2 mx-2">
-                <label for="varID" class="form-label">Link To Project</label>
-                <vue-multiselect
-                  v-model="form.projectid"
-                  :options="projectNewDataID"
-                  :searchable="false"
-                  :close-on-select="true"
-                  :show-labels="false"
-                  placeholder="Pick a value"
-                >
-                </vue-multiselect>
-              </div>
-            </form>
-            <div class="hstack gap-2 justify-content-center mt-2">
-              <button
-                type="button"
-                class="btn btn-light"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-
-              <!-- noted: cara nutup modalnya -->
-              <button
-                type="button"
-                class="btn btn-success"
-                data-bs-dismiss="modal"
-                @click="this.addDashboard(this.form)"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
 import { VueGoodTable } from 'vue-good-table-next'
-import VueMultiselect from 'vue-multiselect'
+
 import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     VueGoodTable,
-    VueMultiselect,
   },
   computed: {
     ...mapState(['dashboards', 'projects']),

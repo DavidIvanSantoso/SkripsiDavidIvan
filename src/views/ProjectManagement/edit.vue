@@ -1,9 +1,18 @@
 <template>
   <div class="AddProject">
-    <div class="row mx-3" style="width: 100%">
+    <div class="row mx-3" style="width: 100% !important">
       <div class="col md-12">
         <div class="card mb-3">
-          <div class="card-header" style="font-size: 20pt">Edit Project</div>
+          <div class="card-header align-items-center d-flex">
+            <h6 class="card-title mb-0 flex-grow-1">Select Device</h6>
+            <button
+              class="btn btn-primary"
+              style="color: aliceblue"
+              @click="this.updateProjectByID(this.newData)"
+            >
+              Confirm
+            </button>
+          </div>
           <div class="card-body">
             <!-- <p class="card-text">
               Some quick example text to build on the card title and make up the
@@ -33,14 +42,6 @@
                 />
               </div>
             </form>
-            <div class="button mt-4">
-              <button
-                class="btn btn-success"
-                @click="this.updateProjectByID(this.newData)"
-              >
-                Submit
-              </button>
-            </div>
           </div>
         </div>
       </div>

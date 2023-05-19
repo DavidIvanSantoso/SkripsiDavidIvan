@@ -197,6 +197,8 @@ export default {
     console.log(this.projects)
     this.mockAPI.children = this.projects
     console.log('FINAL', this.mockAPI.children)
+    let storedUserData = JSON.parse(localStorage.getItem('userCreds'))
+    console.log('STORE DATA USER', storedUserData.user)
   },
 }
 </script>

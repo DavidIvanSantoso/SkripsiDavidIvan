@@ -1,28 +1,25 @@
 <template>
   <div class="addDevice">
-    <div class="card">
-      <div class="card-header">Add New Device</div>
-      <div class="card-body">
-        <!-- Form Input Data -->
-        <section>
-          <div class="row">
-            <div class="col">
-              <div class="card">
-                <div class="card-header align-items-center d-flex">
-                  <h6 class="card-title mb-0 flex-grow-1">
-                    Complete Device Information
-                  </h6>
-                  <button
-                    class="btn btn-success"
-                    style="color: aliceblue"
-                    @click="addDevice(this.newData)"
-                  >
-                    Confirm
-                  </button>
-                </div>
-                <div class="card-body">
-                  <form>
-                    <div class="row">
+    <!-- Form Input Data -->
+    <section>
+      <div class="row-12" style="width: 100% !important">
+        <div class="col">
+          <div class="card">
+            <div class="card-header align-items-center d-flex">
+              <h6 class="card-title mb-0 flex-grow-1">
+                Complete Device Information
+              </h6>
+              <button
+                class="btn btn-primary"
+                style="color: aliceblue"
+                @click="addDevice(this.newData)"
+              >
+                Confirm
+              </button>
+            </div>
+            <div class="card-body">
+              <form>
+                <!-- <div class="row">
                       <div class="col md-6">
                         <div class="form-group">
                           <label for="exampleFormControlInput1"
@@ -51,39 +48,39 @@
                           />
                         </div>
                       </div>
+                    </div> -->
+                <div class="row mt-1" style="width: 100% !important">
+                  <div class="col md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Device Name</label>
+                      <input
+                        v-model="newData.devname"
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Please enter your Device Name"
+                      />
                     </div>
-                    <div class="row mt-3">
-                      <div class="col md-6">
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1"
-                            >Device Name</label
-                          >
-                          <input
-                            v-model="newData.devname"
-                            type="text"
-                            class="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder="Please enter your Device Name"
-                          />
-                        </div>
-                      </div>
-                      <div class="col md-6">
-                        <div class="form-group">
-                          <label for="exampleFormControlInput1"
-                            >Generated Secret Key</label
-                          >
-                          <input
-                            v-model="newData.secretkey"
-                            disabled
-                            type="text"
-                            class="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder="xxxxxxxxx"
-                          />
-                        </div>
-                      </div>
+                  </div>
+                  <div class="col md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1"
+                        >Device Password</label
+                      >
+                      <input
+                        v-model="newData.secretkey"
+                        disabled
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="xxxxxxxxx"
+                      />
                     </div>
-                    <div class="form-group mt-3">
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-6 md-6">
+                    <div class="form-group">
                       <label for="exampleFormControlInput1">Device Type</label>
                       <div
                         class="form-check mt-3"
@@ -97,95 +94,100 @@
                           name="flexRadioDefault"
                           :id="items"
                           :value="items"
+                          style="
+                            width: 1rem !important;
+                            height: 1rem !important;
+                          "
                         />
                         <label class="form-check-label" for="flexRadioDefault1">
                           {{ items }}
                         </label>
                       </div>
                     </div>
-                  </form>
+                  </div>
+                  <div class="col-6 md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1"
+                        >Device Model Name</label
+                      >
+
+                      <VueMultiselect
+                        class="mt-2"
+                        v-model="newData.devmodel"
+                        :options="
+                          newData.devtype === 'ESP32' ? esp32type : esp8266type
+                        "
+                        label="name"
+                        track-by="name"
+                        :searchable="false"
+                        :close-on-select="true"
+                        placeholder="Pick a value"
+                      >
+                      </VueMultiselect>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <!-- Choose Device Type -->
-        <section v-if="newData.devtype !== null">
-          <div class="card my-3">
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
             <div class="card-header align-items-center d-flex">
               <h6 class="card-title mb-0 flex-grow-1">
-                Choose Your Microcontroller Type
+                Internet Configuration
               </h6>
             </div>
             <div class="card-body">
-              <div class="card-group">
-                <!-- ESP32 -->
-                <section v-if="newData.devtype === 'ESP32'">
-                  <div class="card align-items-center" style="width: 100%">
-                    <img
-                      src="@/assets/images/microcontroller/ESP32.png"
-                      class="card-img-top"
-                      style="width: 26rem"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">Choose Your Device ESP32 Type!</h5>
-                      <select
-                        v-model="newData.devmodel"
-                        class="form-select my-3"
-                        aria-label="Default select example"
-                      >
-                        <option
-                          v-for="item in esp32type"
-                          :key="item.id"
-                          :value="item.name"
-                        >
-                          {{ item.name }}
-                        </option>
-                      </select>
+              <form>
+                <div class="row my-1">
+                  <div class="col md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">WiFi SSID</label>
+                      <input
+                        v-model="newData.ssid"
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Please enter your WiFi SSID"
+                      />
                     </div>
                   </div>
-                </section>
-                <!-- ESP8266 -->
-                <section v-else-if="newData.devtype === 'ESP8266'">
-                  <div class="card align-items-center">
-                    <img
-                      src="@/assets/images/microcontroller/ESP8266.png"
-                      class="card-img-top"
-                      style="width: 26rem"
-                    />
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Choose Your Device ESP8266 Type!
-                      </h5>
-                      <select
-                        v-model="newData.devmodel"
-                        class="form-select my-3"
-                        aria-label="Default select example"
+                  <div class="col md-6">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1"
+                        >WiFi Password</label
                       >
-                        <option
-                          v-for="item in esp8266type"
-                          :key="item.id"
-                          :value="item.name"
-                        >
-                          {{ item.name }}
-                        </option>
-                      </select>
+                      <input
+                        v-model="newData.wifipass"
+                        type="text"
+                        class="form-control"
+                        id="exampleFormControlInput1"
+                        placeholder="Please enter your Wifi Password!"
+                      />
                     </div>
                   </div>
-                </section>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
-        </section>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import VueMultiselect from 'vue-multiselect'
+
 export default {
+  components: {
+    VueMultiselect,
+  },
   methods: {
     ...mapActions(['fetchDeviceByID', 'addDevice']),
     testConfirm(params) {

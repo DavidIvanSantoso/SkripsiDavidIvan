@@ -1,7 +1,7 @@
 export default [
   {
     component: 'CNavTitle',
-    name: 'Project Management',
+    name: 'Device Management',
   },
   // {
   //   component: 'CNavItem',
@@ -32,6 +32,10 @@ export default [
     },
   },
   {
+    component: 'CNavTitle',
+    name: 'Project Management',
+  },
+  {
     component: 'CNavItem',
     name: 'IoT Variables',
     to: '/variables/index',
@@ -51,13 +55,19 @@ export default [
   },
   {
     component: 'CNavTitle',
-    name: 'Share User Access',
+    name: 'User Access Management',
   },
   {
     component: 'CNavItem',
     name: 'User',
     to: '/shareuser/index',
     icon: 'cil-people',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Share Access',
+    to: '/shareuser/add',
+    icon: 'cil-settings',
   },
   // {
   //   component: 'CNavItem',

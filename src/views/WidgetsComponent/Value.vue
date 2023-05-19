@@ -1,15 +1,16 @@
 <template>
-  <div class="card-text mt-2" id="varData" :v-model="vardata">
+  <div class="card-text mt-2" id="varData">
     {{ vardata }}
   </div>
 </template>
 
 <script>
 export default {
+  props: ['vardata'],
   components: {},
   data() {
     return {
-      vardata: 0,
+      // vardata: 0,
       vartitle: 'Title',
     }
   },
