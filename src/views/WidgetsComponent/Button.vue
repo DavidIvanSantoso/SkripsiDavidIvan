@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  props: ['varbuttontext', 'varid'],
+  // props: ['varbuttontext', 'varid'],
   data() {
     return {
-      // varbuttontext: 'Button',
+      varbuttontext: 'Button',
       vartitle: 'Title',
     }
   },

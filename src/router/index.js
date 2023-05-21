@@ -67,6 +67,12 @@ const routes = [
         name: 'DashboardEdit',
         component: () => import('@/views/DashboardManagement/edit.vue'),
       },
+       //WIDGETS SETTINGS
+       {
+        path: '/widgetsconfig/:widgetid/:widgettypeid',
+        name: 'WidgetsEdit',
+        component: () => import('@/views/WidgetsComponent/WidgetsSettings/edit.vue'),
+      },
       //IoT Variables
       {
         path: '/variables/index',
@@ -85,7 +91,7 @@ const routes = [
       },
       // Share User
       {
-        path: '/shareuser/:id',
+        path: '/shareuser/shareaccess',
         name: 'UserEdit',
         component: () => import('@/views/ShareUserManagement/edit.vue'),
       },
@@ -99,6 +105,7 @@ const routes = [
         name: 'UserIndex',
         component: () => import('@/views/ShareUserManagement/index.vue'),
       },
+     
       //--------------------------------------------PAGES PLATFORM IOT END HERE-----------------------------------------------
       {
         path: '/theme',

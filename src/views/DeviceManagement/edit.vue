@@ -64,6 +64,10 @@
                           name="flexRadioDefault"
                           :id="items"
                           :value="items"
+                          style="
+                            width: 1rem !important;
+                            height: 1rem !important;
+                          "
                         />
                         <label class="form-check-label" for="flexRadioDefault1">
                           {{ items }}

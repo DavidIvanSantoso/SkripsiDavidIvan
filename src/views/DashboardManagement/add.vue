@@ -104,4 +104,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.card {
+  width: 100%;
+}
+</style>

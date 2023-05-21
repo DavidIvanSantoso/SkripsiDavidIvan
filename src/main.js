@@ -19,12 +19,12 @@ import Select2 from 'vue3-select2-component';
 // import Multiselect from 'vue-multiselect'
 import VueMultiselect from 'vue-multiselect'
 import Notifications from '@kyvg/vue3-notification'
-
+ import Multiselect from '@vueform/multiselect'
 // import the styles 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import 'vue3-drr-grid-layout/dist/style.css'
+
 import "vue3-colorpicker/style.css";
 import "vue-multiselect/dist/vue-multiselect.css"
 
@@ -47,6 +47,7 @@ app.use(Vue3ColorPicker);
 app.use(Select2);
 app.use(VueMultiselect);
 app.use(Notifications)
+app.use(Multiselect)
 
 
 

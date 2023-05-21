@@ -62,13 +62,13 @@ export default [
   {
     component: 'CNavItem',
     name: 'User',
-    to: '/shareuser/index',
+    to: '/shareuser/add',
     icon: 'cil-people',
   },
   {
     component: 'CNavItem',
     name: 'Share Access',
-    to: '/shareuser/add',
+    to: '/shareuser/shareaccess',
     icon: 'cil-settings',
   },
   // {
