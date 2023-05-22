@@ -55,7 +55,11 @@
             </button>
           </div>
           <div class="cp-2 bd-highlight">
-            <button type="button" class="btn btn-primary mx-2">
+            <button
+              type="button"
+              class="btn btn-primary mx-2"
+              @click="updatePosWidgets()"
+            >
               Save Changes
             </button>
           </div>
@@ -93,10 +97,6 @@
           :w="item.w"
           :h="item.h"
           :i="item.i"
-          :useCssTransforms="true"
-          @resize="resize"
-          @move="move"
-          @moved="moved"
         >
           <!-- //1. value
       //2. Button
@@ -281,6 +281,7 @@ export default {
       'fetchWidgetsByIDDashboard',
       'deleteDashWidgetByID',
       'fetchDashboardByID',
+      'updateWidgetsByID',
     ]),
 
     addTag(newTag) {
@@ -357,8 +358,8 @@ export default {
           break
       }
       //setupobject
-      ;(newWidget.x = (this.widgetarr.length * 2) % (this.colNum || 12)),
-        (newWidget.y = this.widgetarr.length + (this.colNum || 12)),
+      ;(newWidget.x = (this.layout.length * 2) % (this.colNum || 12)),
+        (newWidget.y = this.layout.length + (this.colNum || 12)),
         (newWidget.w = newW),
         (newWidget.h = newH),
         (newWidget.i = this.index),
@@ -431,6 +432,13 @@ export default {
       }
       console.log(this.options)
     },
+
+    //UPDATE DASHWIDGETS POSITION
+    updatePosWidgets() {
+      for (let i = 0; i < this.layout.length; i++) {
+        this.updateWidgetsByID(this.layout[i])
+      }
+    },
   },
   mounted() {},
   async created() {
@@ -444,6 +452,8 @@ export default {
 
     await this.pushDataGrid()
     this.index = this.widgetarr.length
+
+    console.log(this.layout)
   },
 }
 </script>

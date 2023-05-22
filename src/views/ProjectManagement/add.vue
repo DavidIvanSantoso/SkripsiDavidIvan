@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       newData: {
-        userid: 'DAVID1',
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
         projectname: '',
         projectdesc: '',
         projectid: '',

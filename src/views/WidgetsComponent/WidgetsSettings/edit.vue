@@ -10,7 +10,11 @@
                   <h6 class="card-title mb-0 flex-grow-1">
                     Widgets Value Settings
                   </h6>
-                  <button class="btn btn-primary" style="color: aliceblue">
+                  <button
+                    class="btn btn-primary"
+                    style="color: aliceblue"
+                    @click="updateToDB(this.$route.params.widgettypeid)"
+                  >
                     Confirm
                   </button>
                 </div>
@@ -32,7 +36,7 @@
                         <div class="form-group mt-3">
                           <label for="exampleInputEmail1">Widget Title</label>
                           <input
-                            v-model="value.widgetid"
+                            v-model="value.data.title"
                             type="email"
                             class="form-control"
                             aria-describedby="emailHelp"
@@ -44,7 +48,7 @@
                             >Link To Variables</label
                           >
                           <multiselect
-                            v-model="value.varid"
+                            v-model="value.data.varid"
                             :options="this.cloudvararr"
                             :custom-label="nameWithLang"
                             placeholder="Select one"
@@ -242,12 +246,26 @@
                         <div class="form-group mt-3">
                           <label for="exampleInputEmail1">Widget Title</label>
                           <input
+                            v-model="linechart.widgettitle"
                             type="email"
                             class="form-control"
                             aria-describedby="emailHelp"
                             placeholder="Enter Title"
                           />
                         </div>
+                        <div class="form-group mt-3">
+                          <label for="exampleInputEmail1"
+                            >Widget Line Type</label
+                          >
+                          <multiselect
+                            v-model="this.linechart.options.stroke.curve"
+                            :options="strokeoptions"
+                            :searchable="false"
+                            :close-on-select="true"
+                            placeholder="Pick a value"
+                          ></multiselect>
+                        </div>
+                        {{ this.linechart.options.stroke.curve }}
 
                         <div class="form-group mt-3">
                           <label for="exampleInputPassword1"
@@ -565,9 +583,13 @@ export default {
   components: {
     Multiselect,
   },
-  computed: { ...mapState(['cloudvararr']) },
+  computed: { ...mapState(['cloudvararr', 'widget']) },
   methods: {
-    ...mapActions(['fetchCloudVarArr']),
+    ...mapActions([
+      'fetchCloudVarArr',
+      'updateWidgetsByID',
+      'fetchWidgetsByIDWidget',
+    ]),
     nameWithLang({ varname, varid }) {
       return `${varname} — [${varid}]`
     },
@@ -585,12 +607,21 @@ export default {
         this.optionsVarname.push(this.cloudvararr[i].varname)
       }
     },
+    updateToDB(params) {
+      if (params == 'Value') {
+        let parsed = this.value.data.varid
+        console.log(parsed)
+        this.value.varid = parsed
+        this.updateWidgetsByID(this.value.data)
+      }
+    },
   },
+
   data() {
     return {
+      strokeoptions: ['straight', 'smooth', 'stepline'],
       value: {
-        widgettitle: '',
-        varid: '',
+        data: {},
       },
       button: {
         widgettitle: '',
@@ -608,6 +639,7 @@ export default {
           stroke: {
             curve: 'straight',
           },
+
           markers: {
             size: 1,
           },
@@ -658,6 +690,9 @@ export default {
     await this.fetchCloudVarArr()
     console.log(this.cloudvararr)
     this.optionsVarid = { ...this.cloudvararr }
+
+    await this.fetchWidgetsByIDWidget(this.$route.params.widgetid)
+    this.value.data = { ...this.widget[0] }
     //this.pushOptions()
   },
 }

@@ -12,7 +12,7 @@
               <button
                 class="btn btn-primary"
                 style="color: aliceblue"
-                @click="addDevice(this.newData)"
+                @click="addDeviceToDB()"
               >
                 Confirm
               </button>
@@ -196,6 +196,21 @@ export default {
     changeTypeConfirm() {
       this.devicetype.typeconfirm = true
     },
+    generatePassword() {
+      var length = 15,
+        charset =
+          'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+        retVal = ''
+      for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n))
+      }
+      return retVal
+    },
+    addDeviceToDB() {
+      let parsedOptions = this.newData.devmodel.name
+      this.newData.devmodel = parsedOptions
+      this.addDevice(this.newData)
+    },
   },
   computed: {
     ...mapState(['device']),
@@ -208,9 +223,10 @@ export default {
         ssid: '',
         wifipass: '',
         devname: '',
-        password: 'EMPTY',
+        secretkey: this.generatePassword(),
         devtype: null,
         devmodel: null,
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
       },
 
       devtype: ['ESP32', 'ESP8266'],

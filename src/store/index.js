@@ -195,6 +195,7 @@ export default createStore({
       }
     },
     async addCloudVar(_,params){
+      console.log(params)
        await axios.post(`${baseServiceUrl}/devicevar`,params).then((res)=>{
         console.log('Response Callback',res)
          notify({ type: "success", title: "Add Data Success 🎉" })
@@ -231,7 +232,7 @@ export default createStore({
       }
     },
     async addDashboard(_,params){
-      console.log("PARAMS",this.params)
+      console.log("PARAMS",params)
        await axios.post(`${baseServiceUrl}/dashboard`,params).then((res)=>{
         console.log('Response Callback',res)
          notify({ type: "success", title: "Add Data Success 🎉" })
@@ -260,6 +261,15 @@ export default createStore({
         notify({ type: "success", title: "Get Data Success 🎉",text:'Berhasil Memuat data.' })
       }
     },
+    async fetchWidgetsByIDWidget({commit},params){
+      console.log(params)
+      const res = await axios.get(`${baseServiceUrl}/dashwidget/widgets/${params}`,params)
+      if(res){
+        console.log(res.data)
+        commit("SET_WIDGET",res.data)
+        notify({ type: "success", title: "Get Data Success 🎉",text:'Berhasil Memuat data.' })
+      }
+    },
      async createDashWidget(_,params){
       const res = await axios.post(`${baseServiceUrl}/dashwidget`,params)
       if(res){
@@ -271,6 +281,13 @@ export default createStore({
       await axios.delete(`${baseServiceUrl}/dashwidget`,{data:{widgetid:params.widgetid,dashboardid:params.dashboardid}}).then((res)=>{
         console.log("Response Callback",res);
         notify({ type: "warning", title: "Delete Data Success 🎉" })
+      })
+    },
+    async updateWidgetsByID(_,params){
+      console.log(params)
+      await axios.put(`${baseServiceUrl}/dashwidget`,params).then((res)=>{
+        console.log('Response Callback',res);
+         notify({ type: "success", title: "Edit Data Success 🎉" })
       })
     },
     

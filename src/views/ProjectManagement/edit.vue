@@ -60,7 +60,12 @@ export default {
   },
   data() {
     return {
-      newData: {},
+      newData: {
+        projectname: '',
+        projectdesc: '',
+        projectid: this.$route.params.id,
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
+      },
     }
   },
   async created() {

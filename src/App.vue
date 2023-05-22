@@ -1,5 +1,5 @@
 <template>
-  <notifications position="bottom left" closeOnClick="true" />
+  <notifications position="bottom left" closeOnClick="true" max="5" />
   <router-view />
 </template>
 

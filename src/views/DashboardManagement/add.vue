@@ -76,6 +76,7 @@ export default {
         dashboardid: '',
         dashboarddesc: '',
         dashboardtitle: '',
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
       },
       projectNewDataID: [],
     }

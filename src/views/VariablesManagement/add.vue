@@ -149,6 +149,7 @@ export default {
         varaccess: '',
         schedid: '',
         varformula: '',
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
       },
       //setup radio
       roleAccess: [
@@ -194,14 +195,7 @@ export default {
       // newCloudVar: [],
     }
   },
-  async created() {
-    // await this.fetchDevices()
-    // await this.fetchCloudVarArr()
-    // this.newDataDevice = { ...this.devices }
-    // this.newCloudVar = { ...this.cloudvararr }
-    // console.log('DEVICE OIPTION', this.newDataDevice)
-    // console.log('CLOUD VAR', this.newCloudVar)
-  },
+  created() {},
 }
 </script>
 

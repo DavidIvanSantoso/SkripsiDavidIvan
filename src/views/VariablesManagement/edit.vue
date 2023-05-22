@@ -178,6 +178,8 @@ export default {
         varname: null,
         schedid: null,
         vartype: null,
+        varid: this.$route.params.varid,
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
       },
 
       roleAccess: [

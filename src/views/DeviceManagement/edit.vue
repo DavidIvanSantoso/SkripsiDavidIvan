@@ -12,7 +12,7 @@
               <button
                 class="btn btn-primary"
                 style="color: aliceblue"
-                @click="updateDeviceByID(this.newData)"
+                @click="updateDataToDB()"
               >
                 Confirm
               </button>
@@ -32,7 +32,7 @@
                       />
                     </div>
                   </div>
-                  <div class="col md-6">
+                  <!-- <div class="col md-6">
                     <div class="form-group">
                       <label for="exampleFormControlInput1"
                         >Device Password</label
@@ -46,7 +46,7 @@
                         placeholder="xxxxxxxxx"
                       />
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="row mt-3">
                   <div class="col md-6">
@@ -160,6 +160,11 @@ export default {
     changeTypeConfirm() {
       this.devicetype.typeconfirm = true
     },
+    updateDataToDB() {
+      let parsed = this.newData.devmodel.name
+      this.newData.devmodel = parsed
+      this.updateDeviceByID(this.newData)
+    },
   },
   computed: {
     ...mapState(['device']),
@@ -171,9 +176,10 @@ export default {
         ssid: '',
         wifipass: '',
         devname: '',
-        password: 'EMPTY',
+        secretkey: '',
         devtype: null,
-        devmodel: null,
+        devmodel: '',
+        userid: JSON.parse(localStorage.getItem('userCreds')).userid,
       },
       devtype: ['ESP32', 'ESP8266'],
       devicetype: {
